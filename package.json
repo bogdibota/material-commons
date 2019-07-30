@@ -4,13 +4,13 @@
   "description": "Extra components for &#x60;material-ui&#x60;",
   "author": "bogdibota",
   "license": "MIT",
-  "repository": "bogdibota/material-commons",
+  "repository": "https://github.com/bogdibota/material-commons",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
   "engines": {
-    "node": ">=8",
-    "npm": ">=5"
+    "node": ">=10",
+    "yarn": ">=1.16"
   },
   "scripts": {
     "test": "cross-env CI=1 react-scripts-ts test --env=jsdom",
@@ -25,7 +25,6 @@
   "peerDependencies": {
     "@material-ui/core": "^4.0.0",
     "@material-ui/icons": "^4.0.0",
-    "prop-types": "^15.5.4",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },
