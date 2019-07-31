@@ -7,38 +7,38 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 
 import DVKForm from '../Form';
+import { DVKField, DVKObject } from '../Form/domain';
 import { FlexExpander } from '../placeholders';
 
 import { SlideUp } from './common';
-import { DVKField, DVKObject } from '../Form/domain';
 
 export type InputModalProps = {
   open: boolean,
   title: string,
-  formKey: string,
-  saveLabel: string,
+  formKey?: string,
+  saveLabel?: string,
 
   onClose: () => void,
-  onCreate: () => void,
-  onChange: () => void,
+  onCreate?: (obj: DVKObject) => void,
+  onChange?: (obj: DVKObject) => void,
 
   fields: DVKField[],
-  defaultValue: DVKObject,
-  invalidFields: { [key: string]: boolean | string },
+  defaultValue?: DVKObject,
+  invalidFields?: { [key: string]: boolean | string },
 
 };
 
 const InputModal: FC<InputModalProps> = ({
                                            open,
                                            onClose,
-                                           onCreate,
-                                           onChange,
+                                           onCreate = () => null,
+                                           onChange = () => null,
                                            title,
-                                           fields = [],
+                                           fields,
                                            defaultValue = {},
                                            formKey = 'static key',
                                            children,
-                                           invalidFields,
+                                           invalidFields = {},
                                            saveLabel = 'Create',
                                          }) => {
   const renderActions = (formId: string) => <>
