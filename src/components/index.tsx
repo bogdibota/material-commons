@@ -1,7 +1,9 @@
 export { default as DVKTable } from './Table';
 export { default as createDefaultActions } from './Table/defaultActions';
+export * from './Table/domain';
 
 export { default as DVKForm } from './Form';
+export * from './Form/domain';
 
 export { default as FloatingButton } from './Button/FloatingButton';
 

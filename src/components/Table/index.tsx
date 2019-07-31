@@ -19,6 +19,7 @@ import { deepGet } from '../../lib';
 
 import styles from './Table.styles';
 import { DVKAction } from './defaultActions';
+import { DVKColumn, DVKPagination } from './domain';
 
 export type MenuActionProps = {
   name: string, label?: string, color?: string,
@@ -46,20 +47,6 @@ const MenuAction: ForwardRefExoticComponent<MenuActionProps> = forwardRef(({name
     <ListItemText primary={ label }/>
   </MenuItem>;
 });
-
-export type DVKColumn = {
-  name: string,
-  label: string,
-  numeric?: boolean
-}
-
-
-export type DVKPagination = {
-  page: number,
-  rowsPerPage: number,
-  order: string,
-  orderBy: string
-}
 
 export type DVKTableProps = {
   // ...DVKPagination

@@ -5,12 +5,17 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@dvkiin/material-commons": "link:..",
     "@material-ui/core": "^4.2.1",
     "@material-ui/icons": "^4.2.1",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.6",
+    "@types/react-dom": "^16.8.5",
     "react-scripts": "3.0.1",
-    "@dvkiin/material-commons": "link:.."
+    "typescript": "3.5.3"
   },
   "scripts": {
     "start": "react-scripts start",
