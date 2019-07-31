@@ -34,7 +34,7 @@ export type DVKFormProps = {
 function convertValue(value: DVKValue, type: string): any {
   switch (type) {
     case 'number':
-      return value === '' ? null : +(value || 0);
+      return value === '' ? '' : +(value || 0);
     default:
       return value;
   }
