@@ -1,25 +1,25 @@
-import React, { Component, ComponentType, forwardRef, ForwardRefExoticComponent, Ref } from 'react';
 import { Table, withStyles } from '@material-ui/core';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
-import TableBody from '@material-ui/core/TableBody';
-import Tooltip from '@material-ui/core/Tooltip';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-import TablePagination from '@material-ui/core/TablePagination';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
+import Tooltip from '@material-ui/core/Tooltip';
 import MenuIcon from '@material-ui/icons/MoreVert';
+import React, { Component, ComponentType, forwardRef, ForwardRefExoticComponent, Ref } from 'react';
 
 import { deepGet } from '../../lib';
-
-import styles from './Table.styles';
 import { DVKAction } from './defaultActions';
 import { DVKColumn, DVKPagination } from './domain';
+
+import styles from './Table.styles';
 
 export type MenuActionProps = {
   name: string, label?: string, color?: string,
@@ -29,13 +29,13 @@ export type MenuActionProps = {
   Icon?: ComponentType
 }
 
-const MenuAction: ForwardRefExoticComponent<MenuActionProps> = forwardRef(({name, label, color, onClick, actionTarget, closeActionsMenu, Icon}, ref: Ref<HTMLLIElement>) => {
+const MenuAction: ForwardRefExoticComponent<MenuActionProps> = forwardRef(({ name, label, color, onClick, actionTarget, closeActionsMenu, Icon }, ref: Ref<HTMLLIElement>) => {
   if (name === 'divider') return <Divider/>;
   if (!onClick || !closeActionsMenu || !Icon) return null;
 
   return <MenuItem
     ref={ ref }
-    style={ {color: color || 'default'} }
+    style={ { color: color || 'default' } }
     onClick={ () => {
       onClick(actionTarget);
       closeActionsMenu();
@@ -85,19 +85,19 @@ class DVKTable extends Component<DVKTableProps, DVKTableState> {
   };
 
   handleSort = (property: string) => {
-    const {orderBy, order, rowsPerPage, onUpdatePagination} = this.props;
+    const { orderBy, order, rowsPerPage, onUpdatePagination } = this.props;
     if (!onUpdatePagination || !rowsPerPage) return;
     const sort = orderBy === property && order === 'asc' ? 'desc' : 'asc';
-    onUpdatePagination({page: 0, rowsPerPage, order: sort, orderBy: property});
+    onUpdatePagination({ page: 0, rowsPerPage, order: sort, orderBy: property });
   };
 
   handleChangePage = (_event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
-    const {orderBy, order, rowsPerPage, onUpdatePagination} = this.props;
+    const { orderBy, order, rowsPerPage, onUpdatePagination } = this.props;
     if (!onUpdatePagination || !rowsPerPage || !orderBy || !order) return;
-    onUpdatePagination({page, rowsPerPage, orderBy, order});
+    onUpdatePagination({ page, rowsPerPage, orderBy, order });
   };
 
-  closeActionsMenu = () => this.setState({actionsMenuAnchor: undefined, actionTarget: undefined});
+  closeActionsMenu = () => this.setState({ actionsMenuAnchor: undefined, actionTarget: undefined });
 
   renderTable() {
     const {
@@ -137,7 +137,7 @@ class DVKTable extends Component<DVKTableProps, DVKTableState> {
             <TableRow
               key={ row.id || row.syntheticId }
               hover={ !!onRowClick }
-              style={ {cursor: onRowClick ? 'pointer' : 'inherit'} }
+              style={ { cursor: onRowClick ? 'pointer' : 'inherit' } }
               onClick={ () => onRowClick && onRowClick(row) }>
               { columns.map(column => <TableCell key={ column.name }
                                                  align={ column.numeric ? 'right' : 'left' }>
@@ -164,7 +164,7 @@ class DVKTable extends Component<DVKTableProps, DVKTableState> {
             </TableRow>
           )) }
           { emptyRows > 0 && (
-            <TableRow style={ {height: 48 * emptyRows} }>
+            <TableRow style={ { height: 48 * emptyRows } }>
               <TableCell colSpan={ columns.length + (actions ? 1 : 0) }/>
             </TableRow>
           ) }
@@ -174,28 +174,28 @@ class DVKTable extends Component<DVKTableProps, DVKTableState> {
   }
 
   renderPagination() {
-    const {rowsPerPage, total, page, classes} = this.props;
+    const { rowsPerPage, total, page, classes } = this.props;
     if (!total || !rowsPerPage || !page) return;
     return (
       <TablePagination
         component="div"
-        backIconButtonProps={ {'aria-label': 'Previous Page'} }
-        nextIconButtonProps={ {'aria-label': 'Next Page'} }
+        backIconButtonProps={ { 'aria-label': 'Previous Page' } }
+        nextIconButtonProps={ { 'aria-label': 'Next Page' } }
 
-        rowsPerPageOptions={ [rowsPerPage] }
+        rowsPerPageOptions={ [ rowsPerPage ] }
         count={ total }
         rowsPerPage={ rowsPerPage }
         page={ page }
 
         onChangePage={ this.handleChangePage }
-        classes={ {root: classes.pagination} }
+        classes={ { root: classes.pagination } }
       />
     );
   }
 
   render() {
-    const {actionsMenuAnchor, actionTarget} = this.state;
-    const {total, actions} = this.props;
+    const { actionsMenuAnchor, actionTarget } = this.state;
+    const { total, actions } = this.props;
 
     return <>
       { this.renderTable() }

@@ -1,11 +1,11 @@
-import React, { FC, Fragment } from 'react';
+import Button from '@material-ui/core/Button';
 
 import Dialog from '@material-ui/core/Dialog';
-import Button from '@material-ui/core/Button';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import React, { FC, Fragment } from 'react';
 
 import { SlideUp } from './common';
 
@@ -17,7 +17,7 @@ export type ConfirmationModalProps = {
   onAccept: () => void
 }
 
-const ConfirmationModal: FC<ConfirmationModalProps> = ({open, message, title, onCancel, onAccept}) => {
+const ConfirmationModal: FC<ConfirmationModalProps> = ({ open, message, title, onCancel, onAccept }) => {
   const renderActions = () => <Fragment>
     <Button onClick={ onCancel }>
       Cancel

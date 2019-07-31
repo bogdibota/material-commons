@@ -1,10 +1,10 @@
-import React, { FC } from 'react';
+import Button from '@material-ui/core/Button';
 
 import Dialog from '@material-ui/core/Dialog';
-import Button from '@material-ui/core/Button';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import React, { FC } from 'react';
 
 import DVKForm from '../Form';
 import { DVKField, DVKObject } from '../Form/domain';

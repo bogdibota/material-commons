@@ -1,6 +1,5 @@
-import React, { Component, ReactNode } from 'react';
-
 import Snackbar from '@material-ui/core/Snackbar';
+import React, { Component, ReactNode } from 'react';
 
 export type SuccessSnackbarProps = {
   message: string,
@@ -8,10 +7,10 @@ export type SuccessSnackbarProps = {
 }
 
 class SuccessSnackbar extends Component<SuccessSnackbarProps> {
-  state = {open: true};
+  state = { open: true };
 
   handleClose = () => {
-    this.setState({open: false});
+    this.setState({ open: false });
   };
 
   render() {

@@ -10,14 +10,14 @@ export type ModalStates = {
 }
 
 export function useModal() {
-  const [{open, data}, setModalState] = useState({open: false} as ModalState);
+  const [ { open, data }, setModalState ] = useState({ open: false } as ModalState);
 
   function show(data: any) {
-    setModalState({open: true, data});
+    setModalState({ open: true, data });
   }
 
   function close() {
-    setModalState({open: false, data: undefined});
+    setModalState({ open: false, data: undefined });
   }
 
   return {
@@ -29,17 +29,17 @@ export function useModal() {
 }
 
 export function useModals(modalNames: string[]) {
-  const [modalState, setModalState] = useState(
+  const [ modalState, setModalState ] = useState(
     modalNames.reduce((acc, modalName) => ({
       ...acc,
-      [modalName]: {open: false},
+      [modalName]: { open: false },
     } as ModalStates), {} as ModalStates));
 
   const show = (modalName: string) => (data: any) =>
-    setModalState((oldState: ModalStates) => ({...oldState, [modalName]: {open: true, data}}));
+    setModalState((oldState: ModalStates) => ({ ...oldState, [modalName]: { open: true, data } }));
 
   const close = (modalName: any) => () =>
-    setModalState((oldState: ModalStates) => ({...oldState, [modalName]: {open: false}}));
+    setModalState((oldState: ModalStates) => ({ ...oldState, [modalName]: { open: false } }));
 
   return modalNames.reduce((acc, modalName: string) => ({
     ...acc, [modalName]: {

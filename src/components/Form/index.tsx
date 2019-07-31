@@ -12,10 +12,10 @@ import React, {
 import { deepSet, uuid } from '../../lib';
 
 import FormContext from './context';
+import { DVKField, DVKObject, DVKValue } from './domain';
+import InputDefault from './InputDefault';
 import InputList from './InputList';
 import InputSelect from './InputSelect';
-import InputDefault from './InputDefault';
-import { DVKField, DVKObject, DVKValue } from './domain';
 
 
 export type DVKFormProps = {
@@ -34,7 +34,7 @@ export type DVKFormProps = {
 function convertValue(value: DVKValue, type: string): any {
   switch (type) {
     case 'number':
-      return +(value || 0);
+      return value === '' ? null : +(value || 0);
     default:
       return value;
   }
@@ -42,7 +42,7 @@ function convertValue(value: DVKValue, type: string): any {
 
 function createDefaultObjFromFields(fields: DVKField[]): DVKObject {
   return fields.reduce((acc, it) => {
-    const newObject = {...acc};
+    const newObject = { ...acc };
     deepSet(newObject, it.name, '');
     return newObject;
   }, {});
@@ -56,8 +56,8 @@ function stripSyntheticIds(obj: DVKObject): DVKObject {
       [key]: Array.isArray(obj[key])
         ? (obj[key] as DVKValue[]).map((value: any) => Object.keys(value).reduce((sAcc, sKey) => {
           // we also strip typename, so the obj could be received and sent directly to apollo
-          if (['syntheticId', '__typename'].indexOf(sKey) > -1) return sAcc;
-          return {...sAcc, [sKey]: value[sKey]};
+          if ([ 'syntheticId', '__typename' ].indexOf(sKey) > -1) return sAcc;
+          return { ...sAcc, [sKey]: value[sKey] };
         }, {}))
         : obj[key],
     }), {});
@@ -81,12 +81,12 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
 
                                                     InputModal = Fragment, // hack to avoid circular dependencies; better solutions are welcome
                                                   }) => {
-  const [obj, setObj] = useState({...createDefaultObjFromFields(fields), ...defaultValue});
+  const [ obj, setObj ] = useState({ ...createDefaultObjFromFields(fields), ...defaultValue });
   const formId = useMemo(uuid, []);
 
   useEffect(() => {
     onChange(obj);
-  }, [obj, onChange]);
+  }, [ obj, onChange ]);
 
   function handleSubmit(event: Event | any) { // WTF?
     event.preventDefault();
@@ -95,9 +95,9 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
     onSubmit(stripSyntheticIds(obj));
   }
 
-  const updateProperty = (property: string, type: string) => ({target: {value, files}}: any) => {
+  const updateProperty = (property: string, type: string) => ({ target: { value, files } }: any) => {
     setObj((oldObj) => {
-      const newObject = {...oldObj};
+      const newObject = { ...oldObj };
       deepSet(newObject, property, files ? files[0] : convertValue(value, type));
       return newObject;
     });
@@ -105,7 +105,7 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
 
   const updatePropertyF = (property: string, update: (value: DVKValue) => DVKValue) => {
     setObj((oldObj: DVKObject) => {
-      const newObject = {...oldObj};
+      const newObject = { ...oldObj };
       deepSet(newObject, property, update(oldObj[property]));
       return newObject;
     });
@@ -121,8 +121,8 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
                               autoComplete = name,
                               fields = [],
                               values = [],
-                              editLabel = ({id}) => `Edit '${ id }'`,
-                              deleteLabel = ({id}) => `Delete '${ id }'`,
+                              editLabel = ({ id }) => `Edit '${ id }'`,
+                              deleteLabel = ({ id }) => `Delete '${ id }'`,
                               deleteMessage = () => '',
                             }: DVKField): ReactNode {
     const hasError = (invalidFields && invalidFields[name]);
@@ -199,7 +199,7 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
       <ActionsWrapper>{ renderActions && typeof renderActions === 'function' && renderActions(formId) }</ActionsWrapper>
 
       {/* hack to submit on enter */ }
-      <button type="submit" style={ {display: 'none'} } form={ formId }/>
+      <button type="submit" style={ { display: 'none' } } form={ formId }/>
     </form>
   );
 };

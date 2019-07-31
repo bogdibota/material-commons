@@ -1,10 +1,9 @@
-import React, { FunctionComponent, useContext } from 'react';
-
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import React, { FunctionComponent, useContext } from 'react';
 
 import { deepGet } from '../../lib';
 
@@ -20,8 +19,8 @@ export type InputSelectProps = {
   values: any[],
 }
 
-const InputSelect: FunctionComponent<InputSelectProps> = ({name, label, type, values, required, autoFocus, disabled, hasError, message}) => {
-  const {obj, updateProperty} = useContext(FormContext);
+const InputSelect: FunctionComponent<InputSelectProps> = ({ name, label, type, values, required, autoFocus, disabled, hasError, message }) => {
+  const { obj, updateProperty } = useContext(FormContext);
 
   return <FormControl
     disabled={ disabled }
