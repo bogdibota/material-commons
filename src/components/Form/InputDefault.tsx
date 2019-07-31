@@ -19,11 +19,7 @@ const InputDefault: FunctionComponent<InputDefaultProps> = ({ name, label, autoF
   const { obj, updateProperty } = useContext(FormContext);
 
   function getValue(obj: DVKObject, name: string): any {
-    const value = deepGet(obj, name);
-    if (value === undefined) {
-      return '';
-    }
-    return value;
+    return deepGet(obj, name) || '';
   }
 
   return (
