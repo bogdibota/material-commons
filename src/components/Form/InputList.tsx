@@ -1,23 +1,23 @@
-import React, { FunctionComponent, useContext } from 'react';
-
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Typography from '@material-ui/core/Typography';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import React, { FunctionComponent, useContext } from 'react';
+
 import { deepGet, useIncrementalKey, useModal, uuid } from '../../lib';
+import ConfirmationModal from '../Modals/ConfirmationModal';
 
 import { FlexExpander } from '../placeholders';
 import DVKTable from '../Table';
 import createDefaultActions from '../Table/defaultActions';
-import ConfirmationModal from '../Modals/ConfirmationModal';
 
 import FormContext from './context';
-import useStyles from './styles';
 import { DVKField, DVKListItem } from './domain';
+import useStyles from './styles';
 
 export type InputListProps = {
   name: string, label: string
@@ -35,15 +35,15 @@ const InputList: FunctionComponent<InputListProps> = ({
                                                         name, label, editLabel, deleteLabel, deleteMessage, fields,
                                                         InputModal,
                                                       }) => {
-  const {obj, updatePropertyF} = useContext(FormContext);
+  const { obj, updatePropertyF } = useContext(FormContext);
   const classes = useStyles();
-  const {open: addModalOpen, show: showAddModal, close: closeAddModal} = useModal();
-  const {open: editModalOpen, data: editModalData = {}, show: showEditModal, close: closeEditModal} = useModal();
-  const {open: deleteModalOpen, data: deleteModalData = {}, show: showDeleteModal, close: closeDeleteModal} = useModal();
-  const [createKey, incrementCreateKey] = useIncrementalKey();
+  const { open: addModalOpen, show: showAddModal, close: closeAddModal } = useModal();
+  const { open: editModalOpen, data: editModalData = {}, show: showEditModal, close: closeEditModal } = useModal();
+  const { open: deleteModalOpen, data: deleteModalData = {}, show: showDeleteModal, close: closeDeleteModal } = useModal();
+  const [ createKey, incrementCreateKey ] = useIncrementalKey();
 
   const values = deepGet(obj, name); // memo?
-  const actions = createDefaultActions({onEdit: showEditModal, onDelete: showDeleteModal});// memo?
+  const actions = createDefaultActions({ onEdit: showEditModal, onDelete: showDeleteModal });// memo?
 
   function isEqual(val1: DVKListItem, val2: DVKListItem) {
     return (val1.id && val1.id === val2.id) || (val1.syntheticId && val1.syntheticId === val2.syntheticId);
@@ -87,7 +87,7 @@ const InputList: FunctionComponent<InputListProps> = ({
       fields={ fields }
       onClose={ closeAddModal }
       onCreate={ (newValue: DVKListItem) => {
-        updatePropertyF(name, (oldValues) => [...(oldValues as DVKListItem[]), {...newValue, syntheticId: uuid()}]);
+        updatePropertyF(name, (oldValues) => [ ...(oldValues as DVKListItem[]), { ...newValue, syntheticId: uuid() } ]);
         incrementCreateKey();
       } }
     />

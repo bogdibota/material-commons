@@ -1,11 +1,11 @@
-import React, { FC, useState } from 'react';
+import Button from '@material-ui/core/Button';
 
 import Dialog from '@material-ui/core/Dialog';
-import Button from '@material-ui/core/Button';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import React, { FC, useState } from 'react';
 
 import { SlideUp } from './common';
 
@@ -18,7 +18,7 @@ const ErrorModal: FC<ErrorModalProps> = ({
                                            message = 'There was an error. Please check your input and try again.',
                                            error,
                                          }) => {
-  const [open, setOpen] = useState(true);
+  const [ open, setOpen ] = useState(true);
 
   function renderActions() {
     return <>

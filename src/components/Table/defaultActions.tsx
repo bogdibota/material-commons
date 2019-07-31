@@ -1,6 +1,6 @@
+import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import CloneIcon from '@material-ui/icons/FileCopy';
-import DeleteIcon from '@material-ui/icons/Delete';
 import { ComponentType } from 'react';
 
 export type DVKAction = {
@@ -22,10 +22,10 @@ export default function createDefaultActions({
   onDelete?: DVKActionCB
 }): DVKAction[] {
   return [
-    onEdit && {name: 'edit', label: 'View & Edit', Icon: EditIcon, onClick: onEdit},
-    onClone && {name: 'clone', label: 'Clone', Icon: CloneIcon, onClick: onClone},
-    {name: 'divider'},
-    onDelete && {name: 'delete', label: 'Delete', Icon: DeleteIcon, color: 'red', onClick: onDelete},
+    onEdit && { name: 'edit', label: 'View & Edit', Icon: EditIcon, onClick: onEdit },
+    onClone && { name: 'clone', label: 'Clone', Icon: CloneIcon, onClick: onClone },
+    { name: 'divider' },
+    onDelete && { name: 'delete', label: 'Delete', Icon: DeleteIcon, color: 'red', onClick: onDelete },
   ]
     .filter(it => !!it) as DVKAction[];
 }

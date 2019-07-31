@@ -1,22 +1,33 @@
+import { Fab, makeStyles } from '@material-ui/core';
+import clsx from 'clsx';
 import React, { FC } from 'react';
-import { Fab, withStyles } from '@material-ui/core';
 
-import styles from './FloatingButton.styles';
+const useStyles = makeStyles({
+  fixed: {
+    position: 'fixed',
+    right: '10px',
+    bottom: '10px',
+  },
+}, { name: 'fab' });
+
 
 export type FloatingButtonProps = {
   onClick: () => any,
-  classes: any,
+  className?: string
 }
 
 const FloatingButton: FC<FloatingButtonProps> = (({
                                                     onClick,
-                                                    classes,
                                                     children,
+                                                    className,
                                                     ...props
-                                                  }) => (
-  <Fab { ...props } onClick={ onClick } className={ classes.absolute }>
-    { children }
-  </Fab>
-));
+                                                  }) => {
+  const { fixed } = useStyles();
+  return (
+    <Fab { ...props } onClick={ onClick } className={ clsx(className, fixed) }>
+      { children }
+    </Fab>
+  );
+});
 
-export default withStyles(styles)(FloatingButton);
+export default FloatingButton;

@@ -1,9 +1,10 @@
-import React, { FunctionComponent, useContext } from 'react';
 import TextField from '@material-ui/core/TextField';
+import React, { FunctionComponent, useContext } from 'react';
 
 import { deepGet } from '../../lib';
 
 import FormContext from './context';
+import { DVKObject } from './domain';
 
 export type InputDefaultProps = {
   name: string, label: string, type: string,
@@ -14,8 +15,16 @@ export type InputDefaultProps = {
   message: string | undefined,
 }
 
-const InputDefault: FunctionComponent<InputDefaultProps> = ({name, label, autoFocus, type, autoComplete, multiline, required, disabled, hasError, message}) => {
-  const {obj, updateProperty} = useContext(FormContext);
+const InputDefault: FunctionComponent<InputDefaultProps> = ({ name, label, autoFocus, type, autoComplete, multiline, required, disabled, hasError, message }) => {
+  const { obj, updateProperty } = useContext(FormContext);
+
+  function getValue(obj: DVKObject, name: string): any {
+    const value = deepGet(obj, name);
+    if (value === undefined) {
+      return '';
+    }
+    return value;
+  }
 
   return (
     <TextField
@@ -31,10 +40,8 @@ const InputDefault: FunctionComponent<InputDefaultProps> = ({name, label, autoFo
       disabled={ disabled }
       margin="dense"
       fullWidth
-
-      value={ deepGet(obj, name) || '' } // must not be undefined because we have a controlled component
+      value={ getValue(obj, name) }
       onChange={ updateProperty(name, type) }
-
       error={ hasError }
       helperText={ message }
     />
