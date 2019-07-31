@@ -5,6 +5,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@dvkiin/material-commons": "link:..",
     "@material-ui/core": "^4.2.1",
     "@material-ui/icons": "^4.2.1",
     "react": "^16.8.6",
