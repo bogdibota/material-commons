@@ -12,10 +12,27 @@ or
 
 ```npm i @dvkiin/material-commons --save```
 
-### Current support
+### Current form fields support 
 
  - text
  - number
  - email
  - password
- - sublist
+ - select
+ - list (array of any objects also defined by `fields`)
+
+### Current table fields support 
+
+ - text
+ - numeric
+ 
+### Current modals support 
+
+ - `InputModal` (contains a form)
+ - `ErrorModal`
+ - `ConfirmationModal`
+ - `SuccessSnackbar`
+ 
+### Other provided components
+
+ - `FloatingButton` - a FAB that actually floats
