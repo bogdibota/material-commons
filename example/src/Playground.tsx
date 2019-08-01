@@ -1,4 +1,4 @@
-import { DVKForm, FloatingButton, InputModal, useModal } from '@dvkiin/material-commons';
+import { DVKForm, FloatingButton, InfoModal, InputModal, useModal } from '@dvkiin/material-commons';
 import { Button, Paper, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -30,14 +30,25 @@ export default function Playground() {
   const [ submitted, submit ] = useState();
   const [ changed, change ] = useState();
   const { open: inputModalOpen, show: showInputModal, close: closeInputModal } = useModal();
+  const { open: openInfoModal, show: showInfoModal, close: closeInfoModal } = useModal();
 
   return <div className={ container }>
     <Paper className={ card }>
       <DVKForm
         fields={ [
           { name: 'id', label: 'numeric id', type: 'number', autoFocus: true },
-          { name: 'name', label: 'string name', type: 'text' },
-          { name: 'email', label: 'string email', type: 'email' },
+          {
+            name: 'name',
+            label: 'string name',
+            type: 'text',
+            infoModal: { message: 'Here you should provide your name.', title: 'Name input' },
+          },
+          {
+            name: 'email',
+            label: 'string email',
+            type: 'email',
+            infoModal: { message: 'Here you should provide your EMAIL.', title: 'Email input' },
+          },
           { name: 'password', label: 'string password', type: 'password' },
         ] }
         onSubmit={ submit }
@@ -68,6 +79,16 @@ export default function Playground() {
         ] }
         onClose={ closeInputModal }
         onCreate={ console.log }
+      />
+    </Paper>
+
+    <Paper className={ card }>
+      <Typography>Info modal</Typography>
+      <Button onClick={ showInfoModal }>Show info modal</Button>
+      <InfoModal
+        data={ { message: 'hi', title: 'title' } }
+        onClose={ closeInfoModal }
+        open={ openInfoModal }
       />
     </Paper>
 

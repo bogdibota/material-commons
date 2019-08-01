@@ -9,7 +9,8 @@ import React, {
   useState,
 } from 'react';
 
-import { deepSet, uuid } from '../../lib';
+import { deepSet, useModal, uuid } from '../../lib';
+import InfoModal from '../Modals/InfoModal';
 
 import FormContext from './context';
 import { DVKField, DVKObject, DVKValue } from './domain';
@@ -83,6 +84,7 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
                                                   }) => {
   const [ obj, setObj ] = useState({ ...createDefaultObjFromFields(fields), ...defaultValue });
   const formId = useMemo(uuid, []);
+  const { open: openInfoModal, close: closeInfoModal, show: showInfoModal, data: dataInfoModal } = useModal();
 
   useEffect(() => {
     onChange(obj);
@@ -124,6 +126,7 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
                               editLabel = ({ id }) => `Edit '${ id }'`,
                               deleteLabel = ({ id }) => `Delete '${ id }'`,
                               deleteMessage = () => '',
+                              infoModal,
                             }: DVKField): ReactNode {
     const hasError = (invalidFields && invalidFields[name]);
     const message = hasError && (typeof hasError === 'string'
@@ -176,9 +179,11 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
         disabled={ disabled }
         hasError={ !!hasError }
         message={ message }
+        infoModal={ infoModal }
       />
     );
   }
+
 
   return (
     <form onSubmit={ handleSubmit } id={ formId }>
@@ -187,12 +192,14 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
           obj,
           updateProperty,
           updatePropertyF,
+          showInfoModal,
         } }>
           { children }
           { fields
             .map((q) => renderInputField(q))
             .reduce((acc: Element[], it: Element) => acc.concat(it), [])
           }
+          <InfoModal onClose={ closeInfoModal } open={ openInfoModal } data={ dataInfoModal }/>
         </FormContext.Provider>
       </ContentWrapper>
 
