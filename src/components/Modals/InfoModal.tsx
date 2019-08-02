@@ -9,10 +9,11 @@ import { SlideUp } from './common';
 export type InfoModalProps = {
   open: boolean,
   onClose: () => void,
-  data?: { message: string, title: string }
+  message: string,
+  title: string
 }
 
-const InfoModal: FC<InfoModalProps> = ({ open, data, onClose }) => {
+const InfoModal: FC<InfoModalProps> = ({ open, message, title, onClose }) => {
   return (
     <Dialog
       TransitionComponent={ SlideUp }
@@ -21,9 +22,9 @@ const InfoModal: FC<InfoModalProps> = ({ open, data, onClose }) => {
       fullWidth
       maxWidth="sm"
     >
-      <DialogTitle>{ data && data.title || '' }</DialogTitle>
+      <DialogTitle>{ title || '' }</DialogTitle>
       <DialogContent>
-        <DialogContentText>{ data && data.message || '' }</DialogContentText>
+        <DialogContentText>{ message || '' }</DialogContentText>
       </DialogContent>
     </Dialog>
   );

@@ -1,6 +1,4 @@
-import { Box, IconButton } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import InfoIcon from '@material-ui/icons/Info';
 import React, { FunctionComponent, useContext } from 'react';
 
 import { deepGet } from '../../lib';
@@ -19,8 +17,8 @@ export type InputDefaultProps = {
   infoModal?: { title: string, message: string, buttonProps?: any },
 }
 
-const InputDefault: FunctionComponent<InputDefaultProps> = ({ name, label, autoFocus, type, autoComplete, multiline, required, disabled, hasError, message, infoModal }) => {
-  const { obj, updateProperty, showInfoModal } = useContext(FormContext);
+const InputDefault: FunctionComponent<InputDefaultProps> = ({ name, label, autoFocus, type, autoComplete, multiline, required, disabled, hasError, message }) => {
+  const { obj, updateProperty } = useContext(FormContext);
 
   function getValue(obj: DVKObject, name: string): any {
     const value = deepGet(obj, name);
@@ -30,40 +28,24 @@ const InputDefault: FunctionComponent<InputDefaultProps> = ({ name, label, autoF
   }
 
   return (
-    <Box display="flex">
-      <Box flexGrow={ 1 }>
-        <TextField
-          name={ name }
-          label={ label }
-          autoFocus={ autoFocus }
-          type={ type }
-          autoComplete={ autoComplete }
-          multiline={ multiline }
-          rows={ 4 }
-          rowsMax={ 10 }
-          required={ required }
-          disabled={ disabled }
-          margin="dense"
-          fullWidth
-          value={ getValue(obj, name) }
-          onChange={ updateProperty(name, type) }
-          error={ hasError }
-          helperText={ message }
-        />
-      </Box>
-
-      { infoModal &&
-      <Box display="flex" justifyContent="flex-end" flexDirection="column">
-        <IconButton
-          { ...(infoModal.buttonProps || {}) }
-          size='small'
-          onClick={ () => showInfoModal({ message: infoModal.message, title: infoModal.title }) }
-        >
-          <InfoIcon/>
-        </IconButton>
-      </Box> }
-
-    </Box>
+    <TextField
+      name={ name }
+      label={ label }
+      autoFocus={ autoFocus }
+      type={ type }
+      autoComplete={ autoComplete }
+      multiline={ multiline }
+      rows={ 4 }
+      rowsMax={ 10 }
+      required={ required }
+      disabled={ disabled }
+      margin="dense"
+      fullWidth
+      value={ getValue(obj, name) }
+      onChange={ updateProperty(name, type) }
+      error={ hasError }
+      helperText={ message }
+    />
   );
 };
 

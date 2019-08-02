@@ -27,10 +27,10 @@ const useStyles = makeStyles(theme => ({
 
 export default function Playground() {
   const { container, card, pre, moreDistance } = useStyles();
-  const [submittedEmpty, submitEmpty] = useState();
-  const [submittedDefaulted, submitDefaulted] = useState();
-  const [changedEmpty, changeEmpty] = useState();
-  const [changedDefaulted, changeDefaulted] = useState();
+  const [ submittedEmpty, submitEmpty ] = useState();
+  const [ submittedDefaulted, submitDefaulted ] = useState();
+  const [ changedEmpty, changeEmpty ] = useState();
+  const [ changedDefaulted, changeDefaulted ] = useState();
 
   const { open: inputModalOpen, show: showInputModal, close: closeInputModal } = useModal();
   const { open: openInfoModal, show: showInfoModal, close: closeInfoModal } = useModal();
@@ -109,13 +109,19 @@ export default function Playground() {
             name: 'email',
             label: 'string email',
             type: 'email',
+          },
+          { name: 'password', label: 'string password', type: 'password' },
+          {
+            name: 'location',
+            label: 'Location',
+            type: 'select',
+            values: [ { label: 'Romania', name: 1 }, { label: 'Not Romania', name: 2 } ],
             infoModal: {
-              message: 'Here you should provide your EMAIL.',
-              title: 'Email input',
+              message: 'Here you should provide your location.',
+              title: 'LOCATIONNN',
               buttonProps: { color: 'secondary' },
             },
           },
-          { name: 'password', label: 'string password', type: 'password' },
         ] }
         defaultValue={ {
           id: 123,
@@ -159,7 +165,8 @@ export default function Playground() {
       <Typography>Info modal</Typography>
       <Button onClick={ showInfoModal }>Show info modal</Button>
       <InfoModal
-        data={ { message: 'hi', title: 'title' } }
+        message="i am message"
+        title="i am title"
         onClose={ closeInfoModal }
         open={ openInfoModal }
       />
