@@ -1,3 +1,5 @@
+import { Box, IconButton } from '@material-ui/core';
+import InfoIcon from '@material-ui/icons/Info';
 import React, {
   ComponentType,
   Fragment,
@@ -9,7 +11,8 @@ import React, {
   useState,
 } from 'react';
 
-import { deepSet, uuid } from '../../lib';
+import { deepSet, useModal, uuid } from '../../lib';
+import InfoModal from '../Modals/InfoModal';
 
 import FormContext from './context';
 import { DVKField, DVKObject, DVKValue } from './domain';
@@ -83,6 +86,7 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
                                                   }) => {
   const [ obj, setObj ] = useState({ ...createDefaultObjFromFields(fields), ...defaultValue });
   const formId = useMemo(uuid, []);
+  const { open: openInfoModal, close: closeInfoModal, show: showInfoModal, data: dataInfoModal } = useModal();
 
   useEffect(() => {
     onChange(obj);
@@ -124,6 +128,7 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
                               editLabel = ({ id }) => `Edit '${ id }'`,
                               deleteLabel = ({ id }) => `Delete '${ id }'`,
                               deleteMessage = () => '',
+                              infoModal,
                             }: DVKField): ReactNode {
     const hasError = (invalidFields && invalidFields[name]);
     const message = hasError && (typeof hasError === 'string'
@@ -176,8 +181,30 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
         disabled={ disabled }
         hasError={ !!hasError }
         message={ message }
+        infoModal={ infoModal }
       />
     );
+  }
+
+  function renderInputBox(field: DVKField): ReactNode {
+    return <Box key={ field.name } display="flex">
+      <Box flexGrow={ 1 }>
+        { renderInputField(field) }
+      </Box>
+
+      { field.infoModal &&
+      <Box display="flex" justifyContent="center" flexDirection="column">
+        <IconButton size='medium'
+                    { ...(field.infoModal.buttonProps || {}) }
+                    onClick={ () => showInfoModal({
+                      message: field.infoModal!.message,
+                      title: field.infoModal!.title,
+                    }) }
+        >
+          <InfoIcon/>
+        </IconButton>
+      </Box> }
+    </Box>;
   }
 
   return (
@@ -190,9 +217,15 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
         } }>
           { children }
           { fields
-            .map((q) => renderInputField(q))
-            .reduce((acc: Element[], it: Element) => acc.concat(it), [])
+            .map((field) => renderInputBox(field))
+            .reduce((acc: ReactNode[], it: ReactNode) => acc.concat(it), [])
           }
+          <InfoModal
+            onClose={ closeInfoModal }
+            open={ openInfoModal }
+            message={ (dataInfoModal && dataInfoModal.message) || '' }
+            title={ (dataInfoModal && dataInfoModal.title) || '' }
+          />
         </FormContext.Provider>
       </ContentWrapper>
 

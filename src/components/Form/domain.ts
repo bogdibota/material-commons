@@ -19,5 +19,8 @@ export type DVKField = {
   values?: any[],
   editLabel?: (value: any) => string,
   deleteLabel?: (value: any) => string,
+
   deleteMessage?: (value: any) => string,
+
+  infoModal?: { title: string, message: string, buttonProps?: any },
 }

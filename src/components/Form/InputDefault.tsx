@@ -13,6 +13,8 @@ export type InputDefaultProps = {
 
   hasError: boolean,
   message: string | undefined,
+
+  infoModal?: { title: string, message: string, buttonProps?: any },
 }
 
 const InputDefault: FunctionComponent<InputDefaultProps> = ({ name, label, autoFocus, type, autoComplete, multiline, required, disabled, hasError, message }) => {
@@ -27,7 +29,7 @@ const InputDefault: FunctionComponent<InputDefaultProps> = ({ name, label, autoF
 
   return (
     <TextField
-      id={ name }
+      name={ name }
       label={ label }
       autoFocus={ autoFocus }
       type={ type }
