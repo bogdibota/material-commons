@@ -16,7 +16,7 @@ export type InputDefaultProps = {
   hasError: boolean,
   message: string | undefined,
 
-  infoModal?: { title: string, message: string },
+  infoModal?: { title: string, message: string, buttonProps?: any },
 }
 
 const InputDefault: FunctionComponent<InputDefaultProps> = ({ name, label, autoFocus, type, autoComplete, multiline, required, disabled, hasError, message, infoModal }) => {
@@ -33,7 +33,7 @@ const InputDefault: FunctionComponent<InputDefaultProps> = ({ name, label, autoF
     <Box display="flex">
       <Box flexGrow={ 1 }>
         <TextField
-          id={ name }
+          name={ name }
           label={ label }
           autoFocus={ autoFocus }
           type={ type }
@@ -53,8 +53,14 @@ const InputDefault: FunctionComponent<InputDefaultProps> = ({ name, label, autoF
       </Box>
 
       { infoModal &&
-      <Box display="flex" justifyContent="center" flexDirection="column">
-        <IconButton size='small' onClick={ () => showInfoModal(infoModal) }><InfoIcon/></IconButton>
+      <Box display="flex" justifyContent="flex-end" flexDirection="column">
+        <IconButton
+          { ...(infoModal.buttonProps || {}) }
+          size='small'
+          onClick={ () => showInfoModal({ message: infoModal.message, title: infoModal.title }) }
+        >
+          <InfoIcon/>
+        </IconButton>
       </Box> }
 
     </Box>

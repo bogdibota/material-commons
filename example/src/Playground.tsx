@@ -27,8 +27,11 @@ const useStyles = makeStyles(theme => ({
 
 export default function Playground() {
   const { container, card, pre, moreDistance } = useStyles();
-  const [ submitted, submit ] = useState();
-  const [ changed, change ] = useState();
+  const [submittedEmpty, submitEmpty] = useState();
+  const [submittedDefaulted, submitDefaulted] = useState();
+  const [changedEmpty, changeEmpty] = useState();
+  const [changedDefaulted, changeDefaulted] = useState();
+
   const { open: inputModalOpen, show: showInputModal, close: closeInputModal } = useModal();
   const { open: openInfoModal, show: showInfoModal, close: closeInfoModal } = useModal();
 
@@ -36,39 +39,109 @@ export default function Playground() {
     <Paper className={ card }>
       <DVKForm
         fields={ [
-          { name: 'id', label: 'numeric id', type: 'number', autoFocus: true },
+          {
+            name: 'id', label: 'numeric id', type: 'number', autoFocus: true,
+            infoModal: {
+              message: 'Here you should provide your id.',
+              title: 'ID TITLE',
+            },
+          },
           {
             name: 'name',
             label: 'string name',
             type: 'text',
-            infoModal: { message: 'Here you should provide your name.', title: 'Name input' },
+            infoModal: {
+              message: 'Here you should provide your name.',
+              title: 'Name input',
+              buttonProps: { color: 'primary' },
+            },
           },
           {
             name: 'email',
             label: 'string email',
             type: 'email',
-            infoModal: { message: 'Here you should provide your EMAIL.', title: 'Email input' },
+            infoModal: {
+              message: 'Here you should provide your EMAIL.',
+              title: 'Email input',
+              buttonProps: { color: 'secondary' },
+            },
           },
           { name: 'password', label: 'string password', type: 'password' },
         ] }
-        onSubmit={ submit }
-        onChange={ change }
+        onSubmit={ submitEmpty }
+        onChange={ changeEmpty }
       />
     </Paper>
 
     <Paper className={ card }>
+      <Typography>Empty form</Typography>
       <Typography>Submitted value</Typography>
-      <pre className={ pre }>{ JSON.stringify(submitted) }</pre>
+      <pre className={ pre }>{ JSON.stringify(submittedEmpty) }</pre>
     </Paper>
 
     <Paper className={ card }>
+      <Typography>Empty form</Typography>
       <Typography>Changed value</Typography>
-      <pre className={ pre }>{ JSON.stringify(changed) }</pre>
+      <pre className={ pre }>{ JSON.stringify(changedEmpty) }</pre>
+    </Paper>
+
+    <Paper className={ card }>
+      <DVKForm
+        fields={ [
+          {
+            name: 'id', label: 'numeric id', type: 'number', autoFocus: true,
+            infoModal: {
+              message: 'Here you should provide your id.',
+              title: 'ID TITLE',
+            },
+          },
+          {
+            name: 'name',
+            label: 'string name',
+            type: 'text',
+            infoModal: {
+              message: 'Here you should provide your name.',
+              title: 'Name input',
+              buttonProps: { color: 'primary' },
+            },
+          },
+          {
+            name: 'email',
+            label: 'string email',
+            type: 'email',
+            infoModal: {
+              message: 'Here you should provide your EMAIL.',
+              title: 'Email input',
+              buttonProps: { color: 'secondary' },
+            },
+          },
+          { name: 'password', label: 'string password', type: 'password' },
+        ] }
+        defaultValue={ {
+          id: 123,
+          name: 'Dorel Valorosu',
+          email: 'dorel@dorel.com',
+        } }
+        onSubmit={ submitDefaulted }
+        onChange={ changeDefaulted }
+      />
+    </Paper>
+
+    <Paper className={ card }>
+      <Typography>Defaulted value form</Typography>
+      <Typography>Submitted value</Typography>
+      <pre className={ pre }>{ JSON.stringify(submittedDefaulted) }</pre>
+    </Paper>
+
+    <Paper className={ card }>
+      <Typography>Defaulted value form</Typography>
+      <Typography>Changed value</Typography>
+      <pre className={ pre }>{ JSON.stringify(changedDefaulted) }</pre>
     </Paper>
 
     <Paper className={ card }>
       <Typography>Input modal</Typography>
-      <Button onClick={ showInputModal }>Show input modal</Button>
+      <Button color='primary' onClick={ showInputModal }>Show input modal</Button>
       <InputModal
         open={ inputModalOpen }
         title="Input modal example"

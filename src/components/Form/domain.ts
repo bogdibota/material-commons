@@ -22,5 +22,5 @@ export type DVKField = {
 
   deleteMessage?: (value: any) => string,
 
-  infoModal?: { title: string, message: string },
+  infoModal?: { title: string, message: string, buttonProps?: any },
 }
