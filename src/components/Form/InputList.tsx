@@ -37,8 +37,8 @@ const InputList: FunctionComponent<InputListProps> = ({
   const { obj, updatePropertyF } = useContext(FormContext);
   const classes = useStyles();
   const { open: addModalOpen, show: showAddModal, close: closeAddModal } = useModal();
-  const { open: editModalOpen, data: editModalData = {}, show: showEditModal, close: closeEditModal } = useModal();
-  const { open: deleteModalOpen, data: deleteModalData = {}, show: showDeleteModal, close: closeDeleteModal } = useModal();
+  const { open: editModalOpen, data: editModalData = {}, show: showEditModal, close: closeEditModal } = useModal<any>();
+  const { open: deleteModalOpen, data: deleteModalData = {}, show: showDeleteModal, close: closeDeleteModal } = useModal<any>();
   const [ createKey, incrementCreateKey ] = useIncrementalKey();
 
   const values = deepGet(obj, name); // memo?

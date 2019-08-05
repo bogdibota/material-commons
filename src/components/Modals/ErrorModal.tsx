@@ -10,8 +10,8 @@ import React, { FC, useState } from 'react';
 import { SlideUp } from './common';
 
 export type ErrorModalProps = {
-  message: string,
-  error: string,
+  message?: string,
+  error: any,
 }
 
 const ErrorModal: FC<ErrorModalProps> = ({

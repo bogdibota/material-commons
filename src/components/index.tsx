@@ -12,5 +12,6 @@ export { default as InfoModal } from './Modals/InfoModal';
 export { default as ErrorModal } from './Modals/ErrorModal';
 export { default as SuccessSnackbar } from './Modals/SuccessSnackbar';
 export { default as ConfirmationModal } from './Modals/ConfirmationModal';
+export * from './Modals/common';
 
 export * from './placeholders';
