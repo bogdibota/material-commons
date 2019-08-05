@@ -1,18 +1,23 @@
 import { useState } from 'react';
 
-export type ModalState = {
+export type ModalState<TData> = {
   open: boolean,
-  data: any | undefined
+  data: TData | undefined
 };
 
-export type ModalStates = {
-  [key: string]: ModalState
+export type ModalStates<TData = any> = {
+  [key: string]: ModalState<TData>
 }
 
-export function useModal() {
-  const [ { open, data }, setModalState ] = useState({ open: false } as ModalState);
+export function useModal<TData = any>(): {
+  open: boolean,
+  data?: TData,
+  show: (data?: TData) => void,
+  close: () => void,
+} {
+  const [ { open, data }, setModalState ] = useState({ open: false } as ModalState<TData>);
 
-  function show(data: any) {
+  function show(data?: TData) {
     setModalState({ open: true, data });
   }
 

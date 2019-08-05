@@ -3,7 +3,7 @@ import React, { Component, ReactNode } from 'react';
 
 export type SuccessSnackbarProps = {
   message: string,
-  action: ReactNode
+  action?: ReactNode
 }
 
 class SuccessSnackbar extends Component<SuccessSnackbarProps> {
