@@ -12,19 +12,22 @@ or
 
 ```npm i @dvkiin/material-commons --save```
 
-### Current form fields support 
+### Current `DVKForm` fields support 
 
- - text
- - number
- - email
- - password
- - select
- - list (array of any objects also defined by `fields`)
+ - `text`
+ - `number`
+ - `email`
+ - `password`
+ - `select`
+ - `list` (array of any objects also defined by `fields`)
+ - `date` (using [@material-ui/pickers](https://github.com/mui-org/material-ui-pickers))
+ - `time` (using [@material-ui/pickers](https://github.com/mui-org/material-ui-pickers))
+ - `date-time` (using [@material-ui/pickers](https://github.com/mui-org/material-ui-pickers))
 
-### Current table fields support 
+### Current `DVKTable` fields support 
 
- - text
- - numeric
+ - `text`
+ - `numeric`
  
 ### Current modals support 
 

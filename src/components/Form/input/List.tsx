@@ -7,33 +7,27 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import React, { FunctionComponent, useContext } from 'react';
 
-import { deepGet, useIncrementalKey, useModal, uuid } from '../../lib';
-import ConfirmationModal from '../Modals/ConfirmationModal';
+import { deepGet, useIncrementalKey, useModal, uuid } from '../../../lib';
+import ConfirmationModal from '../../Modals/ConfirmationModal';
+import { FlexExpander } from '../../placeholders';
+import DVKTable from '../../Table';
+import createDefaultActions from '../../Table/defaultActions';
 
-import { FlexExpander } from '../placeholders';
-import DVKTable from '../Table';
-import createDefaultActions from '../Table/defaultActions';
+import FormContext from '../context';
+import { DVKListField, DVKListItem } from '../domain';
+import useStyles from '../styles';
 
-import FormContext from './context';
-import { DVKField, DVKListItem } from './domain';
-import useStyles from './styles';
+const InputList: FunctionComponent<DVKListField> = ({
+                                                      name,
+                                                      label,
 
-export type InputListProps = {
-  name: string, label: string
+                                                      editLabel = ({ id }) => `Edit '${ id }'`,
+                                                      deleteLabel = ({ id }) => `Delete '${ id }'`,
+                                                      deleteMessage = () => '',
+                                                      fields,
 
-  fields: DVKField[],
-  editLabel: (value: any) => string,
-  deleteLabel: (value: any) => string,
-  deleteMessage: (value: any) => string,
-
-  InputModal: any
-}
-
-
-const InputList: FunctionComponent<InputListProps> = ({
-                                                        name, label, editLabel, deleteLabel, deleteMessage, fields,
-                                                        InputModal,
-                                                      }) => {
+                                                      InputModal,
+                                                    }) => {
   const { obj, updatePropertyF } = useContext(FormContext);
   const classes = useStyles();
   const { open: addModalOpen, show: showAddModal, close: closeAddModal } = useModal();

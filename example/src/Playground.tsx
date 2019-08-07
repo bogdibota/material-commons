@@ -40,16 +40,17 @@ export default function Playground() {
       <DVKForm
         fields={ [
           {
-            name: 'id', label: 'numeric id', type: 'number', autoFocus: true,
+            type: 'number',
+            name: 'id', label: 'numeric id', autoFocus: true,
             infoModal: {
               message: 'Here you should provide your id.',
               title: 'ID TITLE',
             },
           },
           {
+            type: 'text',
             name: 'name',
             label: 'string name',
-            type: 'text',
             infoModal: {
               message: 'Here you should provide your name.',
               title: 'Name input',
@@ -57,9 +58,9 @@ export default function Playground() {
             },
           },
           {
+            type: 'email',
             name: 'email',
             label: 'string email',
-            type: 'email',
             infoModal: {
               message: 'Here you should provide your EMAIL.',
               title: 'Email input',
@@ -67,7 +68,28 @@ export default function Playground() {
             },
           },
           { name: 'password', label: 'string password', type: 'password' },
+          { name: 'q1', label: 'q1', type: 'date', required: true },
+          {
+            name: 'q2', label: 'q2', type: 'date-time',
+            infoModal: {
+              message: 'Here you should provide your birthtime.',
+              title: 'Birthtime',
+              buttonProps: { color: 'secondary' },
+            },
+            errorMessage: 'me w/e you write in invalidFields',
+          },
+          {
+            name: 'q3', label: 'q3', type: 'time',
+            errorMessage: { 'code1': 'i am not valid because of code 1' },
+          },
+          { name: 'q4', label: 'q4', type: 'date', disabled: true },
         ] }
+        invalidFields={ {
+          q3: 'code1',
+          q2: 'w/e code here',
+          email: 'directly this error message',
+          name: true,
+        } }
         onSubmit={ submitEmpty }
         onChange={ changeEmpty }
       />
@@ -176,5 +198,4 @@ export default function Playground() {
       i float
     </FloatingButton>
   </div>;
-
 }
