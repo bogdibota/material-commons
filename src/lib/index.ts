@@ -7,12 +7,14 @@ export function uuid() {
   });
 }
 
-export function deepGet(obj: any, property: string): any {
+export function deepGet(obj: any, property: string, defaultValue?: any): any {
+  if (!obj) return defaultValue;
+
   if (/\./g.test(property)) {
     const properties = property.split('.');
     return deepGet(obj[properties[0]], properties.slice(1).join('.'));
   } else {
-    return obj[property];
+    return obj[property] !== undefined ? obj[property] : defaultValue;
   }
 }
 

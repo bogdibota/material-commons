@@ -5,21 +5,24 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import React, { FunctionComponent, useContext } from 'react';
 
-import { deepGet } from '../../lib';
+import { deepGet } from '../../../lib';
 
-import FormContext from './context';
+import FormContext from '../context';
+import { DVKSelectField, PropsWithErrorManagement } from '../domain';
 
-export type InputSelectProps = {
-  name: string, label: string, type: string,
-  required: boolean, autoFocus: boolean, disabled: boolean,
+const InputSelect: FunctionComponent<DVKSelectField & PropsWithErrorManagement> = ({
+                                                                                     name,
+                                                                                     label,
+                                                                                     type,
 
-  hasError: boolean,
-  message: string | undefined,
+                                                                                     values,
+                                                                                     required = false,
+                                                                                     autoFocus = false,
+                                                                                     disabled = false,
 
-  values: any[],
-}
-
-const InputSelect: FunctionComponent<InputSelectProps> = ({ name, label, type, values, required, autoFocus, disabled, hasError, message }) => {
+                                                                                     hasError,
+                                                                                     message,
+                                                                                   }) => {
   const { obj, updateProperty } = useContext(FormContext);
 
   return <FormControl

@@ -15,10 +15,11 @@ import { deepSet, useModal, uuid } from '../../lib';
 import InfoModal from '../Modals/InfoModal';
 
 import FormContext from './context';
-import { DVKField, DVKObject, DVKValue } from './domain';
-import InputDefault from './InputDefault';
-import InputList from './InputList';
-import InputSelect from './InputSelect';
+import { DVKField, DVKFieldMashed, DVKObject, DVKValue, FieldWithErrorManagement } from './domain';
+import InputDefault from './input/Default';
+import InputList from './input/List';
+import InputSelect from './input/Select';
+import InputDateTime from './input/DateTime';
 
 
 export type DVKFormProps = {
@@ -99,10 +100,21 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
     onSubmit(stripSyntheticIds(obj));
   }
 
-  const updateProperty = (property: string, type: string) => ({ target: { value, files } }: any) => {
+  const updateProperty = (property: string, type: string) => (event: any) => {
+    let value: any;
+    switch (type) {
+      case 'date':
+      case 'time':
+      case 'date-time':
+        value = event;
+        break;
+      default :
+        value = event.target.value;
+    }
+
     setObj((oldObj) => {
       const newObject = { ...oldObj };
-      deepSet(newObject, property, files ? files[0] : convertValue(value, type));
+      deepSet(newObject, property, convertValue(value, type));
       return newObject;
     });
   };
@@ -115,81 +127,95 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
     });
   };
 
+  function getErrorMessage(errorMessageCode: string | any, errorMessage: FieldWithErrorManagement['errorMessage']) {
+    if (!errorMessageCode) return;
+
+    if (typeof errorMessage === 'string') return errorMessage;
+    const code = typeof errorMessageCode === 'string' ? errorMessageCode : 'default';
+
+    if (!errorMessage && typeof errorMessageCode !== 'string') return 'Invalid value';
+    if (!errorMessage) return code;
+
+    return errorMessage[code];
+  }
+
   function renderInputField({
                               name, label, type,
-                              required = false,
-                              autoFocus = false,
-                              disabled = false,
-                              multiline = false,
-                              errorMessage = 'Invalid value',
-                              autoComplete = name,
-                              fields = [],
-                              values = [],
-                              editLabel = ({ id }) => `Edit '${ id }'`,
-                              deleteLabel = ({ id }) => `Delete '${ id }'`,
-                              deleteMessage = () => '',
-                              infoModal,
-                            }: DVKField): ReactNode {
-    const hasError = (invalidFields && invalidFields[name]);
-    const message = hasError && (typeof hasError === 'string'
-        ? (typeof errorMessage === 'string' ? errorMessage : errorMessage[hasError] || errorMessage.default)
-        : (typeof errorMessage === 'string' ? errorMessage : errorMessage.default)
-    );
 
-    if (type === 'list') {
-      return <InputList
-        key={ name }
-        name={ name }
-        label={ label }
-        fields={ fields }
+                              errorMessage,
 
-        editLabel={ editLabel }
-        deleteLabel={ deleteLabel }
-        deleteMessage={ deleteMessage }
+                              // default
+                              required, autoFocus, disabled, multiline, autoComplete,
 
-        InputModal={ InputModal }
-      />;
+                              // select
+                              values,
+
+                              // list
+                              fields, editLabel, deleteLabel, deleteMessage,
+                            }: DVKFieldMashed): ReactNode {
+    const errorMessageCode = (invalidFields && invalidFields[name]);
+    const message = getErrorMessage(errorMessageCode, errorMessage);
+
+    const commonProps = {
+      key: name, name, label, type,
+    };
+
+    const errorProps = {
+      hasError: !!errorMessageCode, message,
+    };
+
+    switch (type) {
+      case 'list':
+        return <InputList
+          { ...commonProps }
+
+          fields={ fields }
+          editLabel={ editLabel }
+          deleteLabel={ deleteLabel }
+          deleteMessage={ deleteMessage }
+          InputModal={ InputModal }
+        />;
+      case 'select':
+        return <InputSelect
+          { ...commonProps }
+
+          values={ values }
+          required={ required }
+          autoFocus={ autoFocus }
+          disabled={ disabled }
+
+          { ...errorProps }
+        />;
+      case 'date':
+      case 'time':
+      case 'date-time':
+        return <InputDateTime
+          { ...commonProps }
+
+          required={ required }
+          disabled={ disabled }
+
+          { ...errorProps }
+        />;
+      default:
+        return <InputDefault
+          { ...commonProps }
+
+          autoFocus={ autoFocus }
+          autoComplete={ autoComplete }
+          multiline={ multiline }
+          required={ required }
+          disabled={ disabled }
+
+          { ...errorProps }
+        />;
     }
-
-    if (type === 'select') {
-      return <InputSelect
-        key={ name }
-        name={ name }
-        label={ label }
-        type={ type }
-        values={ values }
-
-        required={ required }
-        autoFocus={ autoFocus }
-        disabled={ disabled }
-
-        hasError={ !!hasError }
-        message={ message }
-      />;
-    }
-
-    return (
-      <InputDefault
-        key={ name }
-        name={ name }
-        label={ label }
-        autoFocus={ autoFocus }
-        type={ type }
-        autoComplete={ autoComplete }
-        multiline={ multiline }
-        required={ required }
-        disabled={ disabled }
-        hasError={ !!hasError }
-        message={ message }
-        infoModal={ infoModal }
-      />
-    );
   }
 
   function renderInputBox(field: DVKField): ReactNode {
     return <Box key={ field.name } display="flex">
       <Box flexGrow={ 1 }>
-        { renderInputField(field) }
+        { renderInputField(field as DVKFieldMashed) }
       </Box>
 
       { field.infoModal &&
@@ -217,7 +243,7 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
         } }>
           { children }
           { fields
-            .map((field) => renderInputBox(field))
+            .map((field) => renderInputBox(field)) // down-typing
             .reduce((acc: ReactNode[], it: ReactNode) => acc.concat(it), [])
           }
           <InfoModal
