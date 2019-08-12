@@ -3,6 +3,7 @@ import pkg from './package.json'
 
 import rollupConfig from './rollup.config';
 
+// const toExample = `../frontend/node_modules/@dvkiin/material-commons`;
 const toExample = `example/node_modules/@dvkiin/material-commons`;
 
 export default {

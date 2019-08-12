@@ -13,6 +13,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Tooltip from '@material-ui/core/Tooltip';
 import MenuIcon from '@material-ui/icons/MoreVert';
+import clsx from 'clsx';
 import React, { Component, ComponentType, forwardRef, ForwardRefExoticComponent, Ref } from 'react';
 
 import { deepGet } from '../../lib';
@@ -99,6 +100,47 @@ class DVKTable extends Component<DVKTableProps, DVKTableState> {
 
   closeActionsMenu = () => this.setState({ actionsMenuAnchor: undefined, actionTarget: undefined });
 
+  renderCell(row: any, column: DVKColumn) {
+    const { classes } = this.props;
+
+    if (column.type === 'imageBase64') {
+      const imgData = deepGet(row, column.name);
+
+      return <TableCell key={ column.name } className={ clsx(classes.thumbnailWrapper, classes.thumbnailRowWrapper) }>
+        { imgData && <img
+          className={ classes.thumbnail }
+          src={ imgData }
+          alt={ `${ row.id }-${ column.name }` }
+        /> }
+      </TableCell>;
+    }
+
+    return <TableCell key={ column.name } align={ column.numeric ? 'right' : 'left' }>
+      { deepGet(row, column.name) }
+    </TableCell>;
+  }
+
+  renderActions(row: any) {
+    const { classes } = this.props;
+
+    return <TableCell className={ classes.actionsCol }>
+      <IconButton
+        className={ classes.actionsButton }
+        aria-controls="actions-menu"
+        aria-haspopup="true"
+        onClick={ (event) => {
+          event.stopPropagation();
+          this.setState({
+            actionsMenuAnchor: event.currentTarget,
+            actionTarget: row,
+          });
+        } }
+      >
+        <MenuIcon/>
+      </IconButton>
+    </TableCell>;
+  }
+
   renderTable() {
     const {
       classes, className, rows, columns, onRowClick, actions,
@@ -139,28 +181,10 @@ class DVKTable extends Component<DVKTableProps, DVKTableState> {
               hover={ !!onRowClick }
               style={ { cursor: onRowClick ? 'pointer' : 'inherit' } }
               onClick={ () => onRowClick && onRowClick(row) }>
-              { columns.map(column => <TableCell key={ column.name }
-                                                 align={ column.numeric ? 'right' : 'left' }>
-                { deepGet(row, column.name) }
-              </TableCell>) }
-              { actions && (
-                <TableCell className={ classes.actionsCol }>
-                  <IconButton
-                    className={ classes.actionsButton }
-                    aria-controls="actions-menu"
-                    aria-haspopup="true"
-                    onClick={ (event) => {
-                      event.stopPropagation();
-                      this.setState({
-                        actionsMenuAnchor: event.currentTarget,
-                        actionTarget: row,
-                      });
-                    } }
-                  >
-                    <MenuIcon/>
-                  </IconButton>
-                </TableCell>
-              ) }
+
+              { columns.map(column => this.renderCell(row, column)) }
+
+              { actions && this.renderActions(row) }
             </TableRow>
           )) }
           { emptyRows > 0 && (

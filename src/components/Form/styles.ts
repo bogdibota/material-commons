@@ -19,4 +19,16 @@ export default makeStyles(theme => ({
   expansionPanelButtonsWrapper: {
     marginTop: theme.spacing(1),
   },
+  iconLeft: {
+    marginRight: theme.spacing(1),
+  },
+  thumbnail: {
+    maxWidth: 75,
+    maxHeight: 75,
+    marginBottom: theme.spacing(.5),
+  },
+  thumbnailWrapper: {
+    maxHeight: 'initial',
+    height: 'initial',
+  },
 }));

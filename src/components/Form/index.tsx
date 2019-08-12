@@ -16,10 +16,11 @@ import InfoModal from '../Modals/InfoModal';
 
 import FormContext from './context';
 import { DVKField, DVKFieldMashed, DVKObject, DVKValue, FieldWithErrorManagement } from './domain';
+import InputDateTime from './input/DateTime';
 import InputDefault from './input/Default';
+import InputImage from './input/Image';
 import InputList from './input/List';
 import InputSelect from './input/Select';
-import InputDateTime from './input/DateTime';
 
 
 export type DVKFormProps = {
@@ -93,7 +94,7 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
     onChange(obj);
   }, [ obj, onChange ]);
 
-  function handleSubmit(event: Event | any) { // WTF?
+  function handleSubmit(event: React.MouseEvent<HTMLFormElement>) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -194,6 +195,16 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
 
           required={ required }
           disabled={ disabled }
+
+          { ...errorProps }
+        />;
+      case 'image':
+        return <InputImage
+          { ...commonProps }
+
+          required={ required }
+          disabled={ disabled }
+          autoFocus={ autoFocus }
 
           { ...errorProps }
         />;

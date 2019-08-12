@@ -22,10 +22,10 @@ export type PropsWithErrorManagement = {
   message: string | undefined,
 }
 
-export type DVKFieldMashed = DVKField & DVKDateTimeField & DVKListField & DVKSelectField & DVKDefaultField
+export type DVKFieldMashed = DVKField & DVKDateTimeField & DVKListField & DVKSelectField & DVKDefaultField & DVKImageField
 
-export type DVKFieldType = DVKDateTimeType | DVKListType | DVKSelectType | DVKDefaultType
-export type DVKField = (DVKDateTimeField | DVKListField | DVKSelectField | DVKDefaultField)
+export type DVKFieldType = DVKDateTimeType | DVKListType | DVKSelectType | DVKDefaultType | DVKImageType
+export type DVKField = (DVKDateTimeField | DVKListField | DVKSelectField | DVKDefaultField | DVKImageField)
   & {
   infoModal?: { title: string, message: string, buttonProps?: any },
 }
@@ -61,4 +61,11 @@ export type DVKDefaultField = BasicField<DVKDefaultType> & FieldWithErrorManagem
   disabled?: boolean,
   autoComplete?: string,
   multiline?: boolean,
+}
+
+export type DVKImageType = 'image';
+export type DVKImageField = BasicField<DVKImageType> & FieldWithErrorManagement & {
+  required?: boolean,
+  autoFocus?: boolean,
+  disabled?: boolean,
 }
