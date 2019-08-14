@@ -28,8 +28,8 @@ const InputImage: FC<DVKImageField & PropsWithErrorManagement> = ({
                                                                   }) => {
   const { obj, updateProperty } = useContext(FormContext);
   const classes = useStyles();
-  const [ selectedFileName, setSelectedFileName ] = useState(deepGet(obj, name) || '');
-  const [ thumbnail, setThumbnail ] = useState(undefined);
+  const [ selectedFileName, setSelectedFileName ] = useState(deepGet(obj, `${ name }.fileName`, ''));
+  const [ thumbnail, setThumbnail ] = useState(deepGet(obj, `${ name }.thumbnail`, undefined));
   const fileReader = useMemo(() => new FileReader(), []);
 
   useEffect(() => {

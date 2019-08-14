@@ -199,7 +199,7 @@ class DVKTable extends Component<DVKTableProps, DVKTableState> {
 
   renderPagination() {
     const { rowsPerPage, total, page, classes } = this.props;
-    if (!total || !rowsPerPage || !page) return;
+    if (!total || !rowsPerPage || isNaN(page!)) return;
     return (
       <TablePagination
         component="div"
@@ -209,7 +209,7 @@ class DVKTable extends Component<DVKTableProps, DVKTableState> {
         rowsPerPageOptions={ [ rowsPerPage ] }
         count={ total }
         rowsPerPage={ rowsPerPage }
-        page={ page }
+        page={ page! }
 
         onChangePage={ this.handleChangePage }
         classes={ { root: classes.pagination } }

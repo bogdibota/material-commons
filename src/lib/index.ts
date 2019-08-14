@@ -14,7 +14,7 @@ export function deepGet(obj: any, property: string, defaultValue?: any): any {
     const properties = property.split('.');
     return deepGet(obj[properties[0]], properties.slice(1).join('.'));
   } else {
-    return obj[property] !== undefined ? obj[property] : defaultValue;
+    return [ undefined, null ].indexOf(obj[property]) === -1 ? obj[property] : defaultValue;
   }
 }
 
