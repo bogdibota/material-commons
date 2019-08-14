@@ -1,7 +1,8 @@
 export type DVKColumn = {
   name: string,
   label: string,
-  numeric?: boolean
+  numeric?: boolean,
+  type: string
 }
 
 

@@ -16,10 +16,11 @@ import InfoModal from '../Modals/InfoModal';
 
 import FormContext from './context';
 import { DVKField, DVKFieldMashed, DVKObject, DVKValue, FieldWithErrorManagement } from './domain';
+import InputDateTime from './input/DateTime';
 import InputDefault from './input/Default';
+import InputImage from './input/Image';
 import InputList from './input/List';
 import InputSelect from './input/Select';
-import InputDateTime from './input/DateTime';
 
 
 export type DVKFormProps = {
@@ -44,14 +45,6 @@ function convertValue(value: DVKValue, type: string): any {
   }
 }
 
-function createDefaultObjFromFields(fields: DVKField[]): DVKObject {
-  return fields.reduce((acc, it) => {
-    const newObject = { ...acc };
-    deepSet(newObject, it.name, '');
-    return newObject;
-  }, {});
-}
-
 // TODO deep check
 function stripSyntheticIds(obj: DVKObject): DVKObject {
   return Object.keys(obj)
@@ -66,7 +59,6 @@ function stripSyntheticIds(obj: DVKObject): DVKObject {
         : obj[key],
     }), {});
 }
-
 
 const DVKForm: FunctionComponent<DVKFormProps> = ({
                                                     children = [],
@@ -85,15 +77,19 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
 
                                                     InputModal = Fragment, // hack to avoid circular dependencies; better solutions are welcome
                                                   }) => {
-  const [ obj, setObj ] = useState({ ...createDefaultObjFromFields(fields), ...defaultValue });
-  const formId = useMemo(uuid, []);
+  const [ obj, setObj ] = useState({ ...defaultValue });
+  const formId = useMemo(() => {
+    setObj({ ...defaultValue });
+    return uuid();
+  }, [ defaultValue ]);
+
   const { open: openInfoModal, close: closeInfoModal, show: showInfoModal, data: dataInfoModal } = useModal();
 
   useEffect(() => {
     onChange(obj);
   }, [ obj, onChange ]);
 
-  function handleSubmit(event: Event | any) { // WTF?
+  function handleSubmit(event: React.MouseEvent<HTMLFormElement>) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -106,6 +102,7 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
       case 'date':
       case 'time':
       case 'date-time':
+      case 'image':
         value = event;
         break;
       default :
@@ -197,6 +194,16 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
 
           { ...errorProps }
         />;
+      case 'image':
+        return <InputImage
+          { ...commonProps }
+
+          required={ required }
+          disabled={ disabled }
+          autoFocus={ autoFocus }
+
+          { ...errorProps }
+        />;
       default:
         return <InputDefault
           { ...commonProps }
@@ -234,7 +241,7 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
   }
 
   return (
-    <form onSubmit={ handleSubmit } id={ formId }>
+    <form onSubmit={ handleSubmit } id={ formId } key={ formId }>
       <ContentWrapper>
         <FormContext.Provider value={ {
           obj,
@@ -243,7 +250,7 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
         } }>
           { children }
           { fields
-            .map((field) => renderInputBox(field)) // down-typing
+            .map((field) => renderInputBox(field))
             .reduce((acc: ReactNode[], it: ReactNode) => acc.concat(it), [])
           }
           <InfoModal
