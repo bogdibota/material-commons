@@ -11,7 +11,7 @@
   "jsnext:main": "dist/index.es.js",
   "engines": {
     "node": ">=10",
-    "yarn": ">=1.16"
+    "yarn": ">=1.15"
   },
   "scripts": {
     "test": "cross-env CI=1 react-scripts-ts test --env=jsdom",

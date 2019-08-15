@@ -60,10 +60,13 @@ function stripSyntheticIds(obj: DVKObject): DVKObject {
     }), {});
 }
 
+// these values are used for change detection
+const defaultProps = { defaultValue: {} };
+
 const DVKForm: FunctionComponent<DVKFormProps> = ({
                                                     children = [],
 
-                                                    defaultValue = {},
+                                                    defaultValue = defaultProps.defaultValue,
                                                     fields,
 
                                                     ContentWrapper = Fragment,

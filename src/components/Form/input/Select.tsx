@@ -33,7 +33,7 @@ const InputSelect: FunctionComponent<DVKSelectField & PropsWithErrorManagement> 
   >
     <InputLabel htmlFor={ name }>{ label }</InputLabel>
     <Select
-      value={ deepGet(obj, name) }
+      value={ deepGet(obj, name, '') }
       onChange={ updateProperty(name, type) }
       inputProps={ {
         name,

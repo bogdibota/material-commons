@@ -28,6 +28,9 @@ export type InputModalProps = {
 
 };
 
+// these values are used for change detection
+const defaultProps = { defaultValue: {}, formKey: 'staticKey' };
+
 const InputModal: FC<InputModalProps> = ({
                                            open,
                                            onClose,
@@ -35,8 +38,8 @@ const InputModal: FC<InputModalProps> = ({
                                            onChange = () => null,
                                            title,
                                            fields,
-                                           defaultValue = {},
-                                           formKey = 'static key',
+                                           defaultValue = defaultProps.defaultValue,
+                                           formKey = defaultProps.formKey,
                                            children,
                                            invalidFields = {},
                                            saveLabel = 'Create',
