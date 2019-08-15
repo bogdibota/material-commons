@@ -3,7 +3,8 @@
 This package is an extension for `material-ui` including, but not limited to, 
 a declarative 'form' and 'table' component.
 
-[![NPM](https://img.shields.io/npm/v/@dvkiin/material-commons.svg)](https://www.npmjs.com/package/@dvkiin/material-commons) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/@dvkiin/material-commons.svg)](https://www.npmjs.com/package/@dvkiin/material-commons) 
+[![Build Status](https://travis-ci.com/bogdibota/material-commons.svg?branch=master)](https://travis-ci.com/bogdibota/material-commons)
 
 ### Instalation
 ```yarn add @dvkiin/material-commons```
@@ -12,22 +13,27 @@ or
 
 ```npm i @dvkiin/material-commons --save```
 
-### Current `DVKForm` fields support 
+### `DVKForm` fields support 
 
- - `text`
- - `number`
- - `email`
- - `password`
- - `select`
- - `list` (array of any objects also defined by `fields`)
- - `date` (using [@material-ui/pickers](https://github.com/mui-org/material-ui-pickers))
- - `time` (using [@material-ui/pickers](https://github.com/mui-org/material-ui-pickers))
- - `date-time` (using [@material-ui/pickers](https://github.com/mui-org/material-ui-pickers))
+   * [x] `text`
+   * [x] `number`
+   * [x] `email`
+   * [x] `password`
+   * [x] `select`
+   * [x] `list` (array of any objects also defined by `fields`)
+   * [x] `date` (using [@material-ui/pickers](https://github.com/mui-org/material-ui-pickers))
+   * [x] `time` (using [@material-ui/pickers](https://github.com/mui-org/material-ui-pickers))
+   * [x] `date-time` (using [@material-ui/pickers](https://github.com/mui-org/material-ui-pickers))
+   * [x] `image`
 
-### Current `DVKTable` fields support 
+### `DVKTable` fields support 
 
- - `text`
- - `numeric`
+  - [x] `text` (default if not specified otherwise)
+  - [x] `number`
+  - [ ] `date`
+  - [ ] `time`
+  - [ ] `date-time`
+  - [x] `imageBase64`
  
 ### Current modals support 
 
