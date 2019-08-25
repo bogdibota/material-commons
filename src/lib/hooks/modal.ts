@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export type ModalState<TData> = {
   open: boolean,
@@ -17,13 +17,13 @@ export function useModal<TData = any>(): {
 } {
   const [ { open, data }, setModalState ] = useState({ open: false } as ModalState<TData>);
 
-  function show(data?: TData) {
+  const show = useCallback((data?: TData) => {
     setModalState({ open: true, data });
-  }
+  }, [ setModalState ]);
 
-  function close() {
+  const close = useCallback(() => {
     setModalState({ open: false, data: undefined });
-  }
+  }, [ setModalState ]);
 
   return {
     open,

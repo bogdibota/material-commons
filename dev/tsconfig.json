@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig",
+  "compilerOptions": {
+    "outDir": "C:\\tmp\\dvkiin-material-common",
+    "sourceMap": false,
+    "declaration": true,
+    "emitDeclarationOnly": true
+  },
+  "include": [
+    "../src",
+    "./typings.d.ts"
+  ]
+}

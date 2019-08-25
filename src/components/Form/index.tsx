@@ -24,7 +24,7 @@ import InputSelect from './input/Select';
 
 
 export type DVKFormProps = {
-  children?: ReactNode | undefined,
+  bottomContent?: ReactNode,
   defaultValue?: DVKObject,
   fields: DVKField[],
   ContentWrapper?: ComponentType,
@@ -32,7 +32,7 @@ export type DVKFormProps = {
   renderActions?: (formId: string) => ReactElement | null,
   onSubmit?: (obj: DVKObject) => void,
   onChange?: (obj: DVKObject) => void,
-  invalidFields?: { [key: string]: boolean | string },
+  invalidFields?: { [key: string]: boolean | string } | null,
   InputModal?: ComponentType,
 };
 
@@ -64,7 +64,8 @@ function stripSyntheticIds(obj: DVKObject): DVKObject {
 const defaultProps = { defaultValue: {} };
 
 const DVKForm: FunctionComponent<DVKFormProps> = ({
-                                                    children = [],
+                                                    children,
+                                                    bottomContent,
 
                                                     defaultValue = defaultProps.defaultValue,
                                                     fields,
@@ -256,6 +257,7 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
             .map((field) => renderInputBox(field))
             .reduce((acc: ReactNode[], it: ReactNode) => acc.concat(it), [])
           }
+          { bottomContent }
           <InfoModal
             onClose={ closeInfoModal }
             open={ openInfoModal }
