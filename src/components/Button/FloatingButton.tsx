@@ -1,4 +1,5 @@
 import { Fab, makeStyles } from '@material-ui/core';
+import { FabProps } from '@material-ui/core/Fab';
 import clsx from 'clsx';
 import React, { FC } from 'react';
 
@@ -10,18 +11,12 @@ const useStyles = makeStyles({
   },
 }, { name: 'fab' });
 
-
-export type FloatingButtonProps = {
-  onClick: () => any,
-  className?: string
-}
-
-const FloatingButton: FC<FloatingButtonProps> = (({
-                                                    onClick,
-                                                    children,
-                                                    className,
-                                                    ...props
-                                                  }) => {
+const FloatingButton: FC<FabProps> = (({
+                                         onClick,
+                                         children,
+                                         className,
+                                         ...props
+                                       }) => {
   const { fixed } = useStyles();
   return (
     <Fab { ...props } onClick={ onClick } className={ clsx(className, fixed) }>

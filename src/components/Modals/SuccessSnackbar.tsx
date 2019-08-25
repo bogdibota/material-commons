@@ -2,7 +2,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import React, { Component, ReactNode } from 'react';
 
 export type SuccessSnackbarProps = {
-  message: string,
+  message: ReactNode,
   action?: ReactNode
 }
 
