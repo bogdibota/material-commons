@@ -16,6 +16,7 @@ import InfoModal from '../Modals/InfoModal';
 
 import FormContext from './context';
 import { DVKField, DVKFieldMashed, DVKObject, DVKValue, FieldWithErrorManagement } from './domain';
+import InputCheckbox from './input/Checkbox';
 import InputDateTime from './input/DateTime';
 import InputDefault from './input/Default';
 import InputImage from './input/Image';
@@ -87,7 +88,7 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
     return uuid();
   }, [ defaultValue ]);
 
-  const { open: openInfoModal, close: closeInfoModal, show: showInfoModal, data: dataInfoModal } = useModal();
+  const { isOpen: isInfoModalOpen, data: infoModalData, open: openInfoModal, close: closeInfoModal } = useModal();
 
   useEffect(() => {
     onChange(obj);
@@ -108,6 +109,9 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
       case 'date-time':
       case 'image':
         value = event;
+        break;
+      case 'checkbox':
+        value = event.target.checked;
         break;
       default :
         value = event.target.value;
@@ -153,6 +157,9 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
 
                               // list
                               fields, editLabel, deleteLabel, deleteMessage,
+
+                              // checkbox
+                              text,
                             }: DVKFieldMashed): ReactNode {
     const errorMessageCode = (invalidFields && invalidFields[name]);
     const message = getErrorMessage(errorMessageCode, errorMessage);
@@ -208,6 +215,16 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
 
           { ...errorProps }
         />;
+      case 'checkbox':
+        return <InputCheckbox
+          { ...commonProps }
+
+          required={ required }
+          disabled={ disabled }
+          text={ text }
+
+          { ...errorProps }
+        />;
       default:
         return <InputDefault
           { ...commonProps }
@@ -233,7 +250,7 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
       <Box display="flex" justifyContent="center" flexDirection="column">
         <IconButton size='medium'
                     { ...(field.infoModal.buttonProps || {}) }
-                    onClick={ () => showInfoModal({
+                    onClick={ () => openInfoModal({
                       message: field.infoModal!.message,
                       title: field.infoModal!.title,
                     }) }
@@ -260,9 +277,9 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
           { bottomContent }
           <InfoModal
             onClose={ closeInfoModal }
-            open={ openInfoModal }
-            message={ (dataInfoModal && dataInfoModal.message) || '' }
-            title={ (dataInfoModal && dataInfoModal.title) || '' }
+            open={ isInfoModalOpen }
+            message={ (infoModalData && infoModalData.message) || '' }
+            title={ (infoModalData && infoModalData.title) || '' }
           />
         </FormContext.Provider>
       </ContentWrapper>

@@ -6,9 +6,8 @@ import {
   useIncrementalKey,
   useModal,
 } from '@dvkiin/material-commons';
-import { Button, Paper, Typography } from '@material-ui/core';
+import { Button, Divider, Paper, Typography } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import clsx from 'clsx';
 import React, { useEffect, useRef } from 'react';
 import useStyles from './styles';
 
@@ -16,8 +15,9 @@ import useStyles from './styles';
 export default function Playground() {
   const { container, card, moreDistance, verticalCenter, gutterRight } = useStyles();
 
-  const { open: inputModalOpen, show: showInputModal, close: closeInputModal } = useModal();
-  const { open: openInfoModal, show: showInfoModal, close: closeInfoModal } = useModal();
+  const { isOpen: isInputModalOpen, open: openInputModal, close: closeInputModal } = useModal();
+  const { isOpen: isInfoModalOpen, open: openInfoModal, close: closeInfoModal } = useModal();
+  const { isOpen: isComplexInfoModalOpen, open: openComplexInfoModal, close: closeComplexInfoModal } = useModal();
 
   const [ snackbarKey, triggerSnackbar ] = useIncrementalKey();
   const snackbarRef = useRef<SuccessSnackbar>(null);
@@ -26,15 +26,15 @@ export default function Playground() {
 
   useEffect(() => {
     console.log('I wanna be called once');
-  }, [ showInfoModal ]);
+  }, [ openInfoModal ]);
 
 
   return <div className={ container }>
     <Paper className={ card }>
       <Typography>Input modal</Typography>
-      <Button color='primary' onClick={ showInputModal }>Show input modal</Button>
+      <Button color='primary' onClick={ openInputModal }>Show input modal</Button>
       <InputModal
-        open={ inputModalOpen }
+        open={ isInputModalOpen }
         title="Input modal example"
         fields={ [
           { name: 'id', label: 'numeric id', type: 'number', autoFocus: true },
@@ -48,12 +48,26 @@ export default function Playground() {
 
     <Paper className={ card }>
       <Typography>Info modal</Typography>
-      <Button onClick={ showInfoModal }>Show info modal</Button>
+      <Button onClick={ openInfoModal }>Show info modal</Button>
       <InfoModal
         message="i am message"
         title="i am title"
         onClose={ closeInfoModal }
-        open={ openInfoModal }
+        open={ isInfoModalOpen }
+      />
+      <Divider/>
+      <Button onClick={ openComplexInfoModal }>Show complex info modal</Button>
+      <InfoModal
+        message={ <>
+          <Typography variant="h4">important part</Typography>
+          <Typography>complex explanation</Typography>
+          <Typography variant="caption">not very important part</Typography>
+        </> }
+        title={ <>
+          Very <strong>important</strong> information here!
+        </> }
+        onClose={ closeComplexInfoModal }
+        open={ isComplexInfoModalOpen }
       />
     </Paper>
 
@@ -79,7 +93,7 @@ export default function Playground() {
     <FloatingButton
       color="primary" aria-label="floating stuff"
       onClick={ () => console.log('FAB clicked') }
-      className={ clsx('override', moreDistance) }
+      className={ moreDistance }
     >
       i float
     </FloatingButton>

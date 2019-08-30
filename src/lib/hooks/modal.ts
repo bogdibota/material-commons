@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
 export type ModalState<TData> = {
-  open: boolean,
+  isOpen: boolean,
   data: TData | undefined
 };
 
@@ -10,25 +10,25 @@ export type ModalStates<TData = any> = {
 }
 
 export function useModal<TData = any>(): {
-  open: boolean,
+  isOpen: boolean,
   data?: TData,
-  show: (data?: TData) => void,
+  open: (data?: TData) => void,
   close: () => void,
 } {
-  const [ { open, data }, setModalState ] = useState({ open: false } as ModalState<TData>);
+  const [ { isOpen, data }, setModalState ] = useState({ isOpen: false } as ModalState<TData>);
 
-  const show = useCallback((data?: TData) => {
-    setModalState({ open: true, data });
+  const open = useCallback((data?: TData) => {
+    setModalState({ isOpen: true, data });
   }, [ setModalState ]);
 
   const close = useCallback(() => {
-    setModalState({ open: false, data: undefined });
+    setModalState({ isOpen: false, data: undefined });
   }, [ setModalState ]);
 
   return {
-    open,
+    isOpen,
     data,
-    show,
+    open,
     close,
   };
 }
@@ -37,20 +37,20 @@ export function useModals(modalNames: string[]) {
   const [ modalState, setModalState ] = useState(
     modalNames.reduce((acc, modalName) => ({
       ...acc,
-      [modalName]: { open: false },
+      [modalName]: { isOpen: false },
     } as ModalStates), {} as ModalStates));
 
-  const show = (modalName: string) => (data: any) =>
-    setModalState((oldState: ModalStates) => ({ ...oldState, [modalName]: { open: true, data } }));
+  const open = (modalName: string) => (data: any) =>
+    setModalState((oldState: ModalStates) => ({ ...oldState, [modalName]: { isOpen: true, data } }));
 
   const close = (modalName: any) => () =>
-    setModalState((oldState: ModalStates) => ({ ...oldState, [modalName]: { open: false } }));
+    setModalState((oldState: ModalStates) => ({ ...oldState, [modalName]: { isOpen: false } }));
 
   return modalNames.reduce((acc, modalName: string) => ({
     ...acc, [modalName]: {
-      open: modalState[modalName].open,
+      isOpen: modalState[modalName].isOpen,
       data: modalState[modalName].data,
-      show: show(modalName),
+      open: open(modalName),
       close: close(modalName),
     },
   }), {});

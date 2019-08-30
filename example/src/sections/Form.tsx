@@ -11,7 +11,6 @@ const FormSection: FC = () => {
   const [ changedEmpty, changeEmpty ] = useState();
   const [ changedDefaulted, changeDefaulted ] = useState();
 
-
   const defaultValue = useMemo(() => ({
     id: 123,
     name: 'Dorel Valorosu',
@@ -50,6 +49,13 @@ const FormSection: FC = () => {
               buttonProps: { color: 'secondary' },
             },
           },
+          {
+            name: 'termsAndConditions',
+            label: 'Terms and conditions',
+            text: 'I accept the terms and conditions',
+            type: 'checkbox',
+            required: true,
+          },
           { name: 'password', label: 'string password', type: 'password' },
           { name: 'q1', label: 'q1', type: 'date', required: true },
           {
@@ -72,6 +78,7 @@ const FormSection: FC = () => {
           q2: 'w/e code here',
           email: 'directly this error message',
           name: true,
+          termsAndConditions: 'You must accept the terms and conditions to continue',
         } }
         onSubmit={ submitEmpty }
         onChange={ changeEmpty }
@@ -126,6 +133,18 @@ const FormSection: FC = () => {
               title: 'LOCATIONNN',
               buttonProps: { color: 'secondary' },
             },
+          },
+          {
+            name: 'avatar',
+            label: 'Avatar',
+            type: 'image',
+            required: true,
+          },
+          {
+            name: 'terms and conditions',
+            label: 'Terms and conditions',
+            type: 'checkbox',
+            required: true,
           },
         ] }
         defaultValue={ defaultValue }
