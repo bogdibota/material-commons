@@ -87,7 +87,7 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
     return uuid();
   }, [ defaultValue ]);
 
-  const { open: openInfoModal, close: closeInfoModal, show: showInfoModal, data: dataInfoModal } = useModal();
+  const { isOpen: isInfoModalOpen, data: infoModalData, open: openInfoModal, close: closeInfoModal } = useModal();
 
   useEffect(() => {
     onChange(obj);
@@ -233,7 +233,7 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
       <Box display="flex" justifyContent="center" flexDirection="column">
         <IconButton size='medium'
                     { ...(field.infoModal.buttonProps || {}) }
-                    onClick={ () => showInfoModal({
+                    onClick={ () => openInfoModal({
                       message: field.infoModal!.message,
                       title: field.infoModal!.title,
                     }) }
@@ -260,9 +260,9 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
           { bottomContent }
           <InfoModal
             onClose={ closeInfoModal }
-            open={ openInfoModal }
-            message={ (dataInfoModal && dataInfoModal.message) || '' }
-            title={ (dataInfoModal && dataInfoModal.title) || '' }
+            open={ isInfoModalOpen }
+            message={ (infoModalData && infoModalData.message) || '' }
+            title={ (infoModalData && infoModalData.title) || '' }
           />
         </FormContext.Provider>
       </ContentWrapper>

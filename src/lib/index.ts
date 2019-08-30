@@ -12,7 +12,7 @@ export function deepGet(obj: any, property: string, defaultValue?: any): any {
 
   if (/\./g.test(property)) {
     const properties = property.split('.');
-    return deepGet(obj[properties[0]], properties.slice(1).join('.'));
+    return deepGet(obj[properties[0]], properties.slice(1).join('.'), defaultValue);
   } else {
     return [ undefined, null ].indexOf(obj[property]) === -1 ? obj[property] : defaultValue;
   }

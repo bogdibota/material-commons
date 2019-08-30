@@ -5,7 +5,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import React, { FunctionComponent, useContext } from 'react';
+import React, { FunctionComponent, useContext, useMemo } from 'react';
 
 import { deepGet, useIncrementalKey, useModal, uuid } from '../../../lib';
 import ConfirmationModal from '../../Modals/ConfirmationModal';
@@ -30,13 +30,16 @@ const InputList: FunctionComponent<DVKListField> = ({
                                                     }) => {
   const { obj, updatePropertyF } = useContext(FormContext);
   const classes = useStyles();
-  const { open: addModalOpen, show: showAddModal, close: closeAddModal } = useModal();
-  const { open: editModalOpen, data: editModalData = {}, show: showEditModal, close: closeEditModal } = useModal<any>();
-  const { open: deleteModalOpen, data: deleteModalData = {}, show: showDeleteModal, close: closeDeleteModal } = useModal<any>();
+  const { isOpen: isAddModalOpen, open: openAddModal, close: closeAddModal } = useModal();
+  const { isOpen: isEditModalOpen, data: editModalData = {}, open: openEditModal, close: closeEditModal } = useModal<any>();
+  const { isOpen: isDeleteModalOpen, data: deleteModalData = {}, open: openDeleteModal, close: closeDeleteModal } = useModal<any>();
   const [ createKey, incrementCreateKey ] = useIncrementalKey();
 
-  const values = deepGet(obj, name); // memo?
-  const actions = createDefaultActions({ onEdit: showEditModal, onDelete: showDeleteModal });// memo?
+  const values = useMemo(() => deepGet(obj, name), [ obj, name ]);
+  const actions = useMemo(() => createDefaultActions({
+    onEdit: openEditModal,
+    onDelete: openDeleteModal,
+  }), [ openEditModal, openDeleteModal ]);
 
   function isEqual(val1: DVKListItem, val2: DVKListItem) {
     return (val1.id && val1.id === val2.id) || (val1.syntheticId && val1.syntheticId === val2.syntheticId);
@@ -58,7 +61,7 @@ const InputList: FunctionComponent<DVKListField> = ({
               columns={ fields }
               actions={ actions }
               rows={ values }
-              onRowClick={ showEditModal }
+              onRowClick={ openEditModal }
             />
             : <Typography key={ name } className={ classes.expansionPanelNoContent }>
               No { label.toLowerCase() }. Please add some.
@@ -67,7 +70,7 @@ const InputList: FunctionComponent<DVKListField> = ({
         </Grid>
         <Grid item container className={ classes.expansionPanelButtonsWrapper }>
           <FlexExpander/>
-          <Button onClick={ showAddModal }>
+          <Button onClick={ openAddModal }>
             Add
           </Button>
         </Grid>
@@ -76,7 +79,7 @@ const InputList: FunctionComponent<DVKListField> = ({
     <InputModal
       title={ `Add new ${ name }` }
       formKey={ createKey }
-      open={ addModalOpen }
+      open={ isAddModalOpen }
       fields={ fields }
       onClose={ closeAddModal }
       onCreate={ (newValue: DVKListItem) => {
@@ -87,7 +90,7 @@ const InputList: FunctionComponent<DVKListField> = ({
     <InputModal
       title={ editLabel(editModalData) }
       formKey={ editModalData.id || editModalData.syntheticId }
-      open={ editModalOpen }
+      open={ isEditModalOpen }
       fields={ fields }
       defaultValue={ editModalData }
       saveLabel="Save"
@@ -102,7 +105,7 @@ const InputList: FunctionComponent<DVKListField> = ({
     <ConfirmationModal
       title={ deleteLabel(deleteModalData) }
       message={ deleteMessage(deleteModalData) }
-      open={ deleteModalOpen }
+      open={ isDeleteModalOpen }
       onCancel={ closeDeleteModal }
       onAccept={ () => {
         updatePropertyF(name, (oldValues) => (oldValues as DVKListItem[])

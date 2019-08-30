@@ -11,7 +11,6 @@ const FormSection: FC = () => {
   const [ changedEmpty, changeEmpty ] = useState();
   const [ changedDefaulted, changeDefaulted ] = useState();
 
-
   const defaultValue = useMemo(() => ({
     id: 123,
     name: 'Dorel Valorosu',
@@ -126,6 +125,12 @@ const FormSection: FC = () => {
               title: 'LOCATIONNN',
               buttonProps: { color: 'secondary' },
             },
+          },
+          {
+            name: 'avatar',
+            label: 'Avatar',
+            type: 'image',
+            required: true,
           },
         ] }
         defaultValue={ defaultValue }

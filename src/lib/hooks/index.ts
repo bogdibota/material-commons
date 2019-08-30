@@ -1,10 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useReducer } from 'react';
 
 export function useIncrementalKey(): [ number, () => void ] {
-  const [ key, setKey ] = useState(0);
-  const incrementKey = useMemo(() => () => setKey(key => key + 1), [ setKey ]);
+  const [ key, incrementKey ] = useReducer(oldKey => oldKey + 1, 0);
 
-  return [ key, incrementKey ];
+  return [ key, incrementKey as () => void ];
 }
 
 export * from './modal';

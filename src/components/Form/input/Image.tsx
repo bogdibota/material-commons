@@ -8,7 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import DefaultThumbnail from '@material-ui/icons/AddPhotoAlternate';
 import DeleteIcon from '@material-ui/icons/Delete';
 import BrowseImage from '@material-ui/icons/ImageSearch';
-import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
+import React, { ChangeEvent, FC, useContext, useEffect, useMemo, useState } from 'react';
 
 import { deepGet } from '../../../lib';
 
@@ -33,14 +33,14 @@ const InputImage: FC<DVKImageField & PropsWithErrorManagement> = ({
   const fileReader = useMemo(() => new FileReader(), []);
 
   useEffect(() => {
-    fileReader.onload = function ({ target: { result } }: any) { // TODO find correct type
-      setThumbnail(result);
+    fileReader.onload = function () {
+      setThumbnail(fileReader.result);
     };
-  }, [ fileReader.onload ]);
+  }, [ fileReader ]);
 
-  function onFileSelected({ target: { files } }: any) {// TODO find correct type
+  function onFileSelected({ target: { files } }: ChangeEvent<HTMLInputElement>) {
+    if (!files || !files[0]) return;
     const file = files[0];
-    if (!file) return;
 
     setSelectedFileName(file.name);
     fileReader.readAsDataURL(file);

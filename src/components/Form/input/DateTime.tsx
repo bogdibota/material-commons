@@ -27,7 +27,7 @@ const InputDateTime: FunctionComponent<DVKDateTimeField & PropsWithErrorManageme
     label: label,
     required: required,
     disabled: disabled,
-    value: deepGet(obj, name, ''),
+    value: deepGet(obj, name, null),
     onChange: updateProperty(name, type),
     error: hasError,
     helperText: message,

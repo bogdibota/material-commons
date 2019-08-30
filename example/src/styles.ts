@@ -15,9 +15,7 @@ const useStyles = makeStyles(theme => ({
     wordWrap: 'break-word',
   },
   moreDistance: {
-    '&.override': {
-      right: 100,
-    },
+    right: 100,
   },
   verticalCenter: {
     display: 'flex',
