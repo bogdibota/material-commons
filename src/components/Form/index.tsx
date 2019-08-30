@@ -16,6 +16,7 @@ import InfoModal from '../Modals/InfoModal';
 
 import FormContext from './context';
 import { DVKField, DVKFieldMashed, DVKObject, DVKValue, FieldWithErrorManagement } from './domain';
+import InputCheckbox from './input/Checkbox';
 import InputDateTime from './input/DateTime';
 import InputDefault from './input/Default';
 import InputImage from './input/Image';
@@ -109,6 +110,9 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
       case 'image':
         value = event;
         break;
+      case 'checkbox':
+        value = event.target.checked;
+        break;
       default :
         value = event.target.value;
     }
@@ -153,6 +157,9 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
 
                               // list
                               fields, editLabel, deleteLabel, deleteMessage,
+
+                              // checkbox
+                              text,
                             }: DVKFieldMashed): ReactNode {
     const errorMessageCode = (invalidFields && invalidFields[name]);
     const message = getErrorMessage(errorMessageCode, errorMessage);
@@ -205,6 +212,16 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
           required={ required }
           disabled={ disabled }
           autoFocus={ autoFocus }
+
+          { ...errorProps }
+        />;
+      case 'checkbox':
+        return <InputCheckbox
+          { ...commonProps }
+
+          required={ required }
+          disabled={ disabled }
+          text={ text }
 
           { ...errorProps }
         />;
