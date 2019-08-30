@@ -115,7 +115,7 @@ class DVKTable extends Component<DVKTableProps, DVKTableState> {
       </TableCell>;
     }
 
-    return <TableCell key={ column.name } align={ column.numeric ? 'right' : 'left' }>
+    return <TableCell key={ column.name } align={ column.type === 'number' ? 'right' : 'left' }>
       { deepGet(row, column.name) }
     </TableCell>;
   }
@@ -148,17 +148,19 @@ class DVKTable extends Component<DVKTableProps, DVKTableState> {
     } = this.props;
     const emptyRows = (total && (rowsPerPage - Math.min(rowsPerPage, total - page * rowsPerPage))) || 0;
 
+    console.log('i am rendered');
+
     return (
       <Table className={ className }>
         <TableHead>
           <TableRow>
             { columns.map(column => <TableCell
               key={ column.name }
-              align={ column.numeric ? 'right' : 'left' }
+              align={ column.type === 'number' ? 'right' : 'left' }
               sortDirection={ orderBy === column.name ? order : false }>
               { orderBy ? <Tooltip
                   title="Sort"
-                  placement={ column.numeric ? 'bottom-end' : 'bottom-start' }
+                  placement={ column.type === 'number' ? 'bottom-end' : 'bottom-start' }
                   enterDelay={ 300 }
                 >
                   <TableSortLabel
