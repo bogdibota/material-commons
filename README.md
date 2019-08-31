@@ -25,6 +25,7 @@ or
    * [x] `time` (using [@material-ui/pickers](https://github.com/mui-org/material-ui-pickers))
    * [x] `date-time` (using [@material-ui/pickers](https://github.com/mui-org/material-ui-pickers))
    * [x] `image`
+   * [x] `checkbox`
 
 ### `DVKTable` fields support 
 

@@ -1,14 +1,27 @@
-import { createDefaultActions, DVKTable, uuid } from '@dvkiin/material-commons';
+import { createDefaultActions, DVKSort, DVKTable, uuid } from '@dvkiin/material-commons';
 import { Button, Divider, Grid, Paper, Typography } from '@material-ui/core';
 import clsx from 'clsx';
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 
 import useStyles from '../styles';
+
+function reduceRows(oldRows: any[], payload: { type: string, data: any }) {
+  switch (payload.type) {
+    case 'add':
+      return [ ...oldRows, ...payload.data ];
+    case 'sort':
+      const { order, orderBy } = payload.data;
+      return oldRows.sort((a, b) => (order === 'desc' ? -1 : 1) * (a[orderBy] > b[orderBy] ? 1 : -1));
+    default:
+      return [];
+  }
+}
 
 const TableSection = () => {
   const { card, bigCard } = useStyles();
 
-  const [ rows, addRows ] = useReducer((oldRows, newRows) => [ ...oldRows, ...newRows ], []);
+  const [ sort, setSort ] = useState<DVKSort | null>(null);
+  const [ rows, dispatch ] = useReducer(reduceRows, []);
 
   function createRow() {
     return {
@@ -19,7 +32,7 @@ const TableSection = () => {
   }
 
   function addData(howMany: number) {
-    addRows(new Array(howMany).fill(null).map(createRow));
+    dispatch({ type: 'add', data: new Array(howMany).fill(null).map(createRow) });
   }
 
   return <Grid container wrap="wrap">
@@ -31,8 +44,14 @@ const TableSection = () => {
     </Paper>
     <Paper className={ clsx(card, bigCard) }>
       <DVKTable
+        sort={ sort }
+        onPaginationSortUpdate={ (pagination, sort) => {
+          if (!sort) return;
+          setSort(sort);
+          dispatch({ type: 'sort', data: sort });
+        } }
         columns={ [
-          { name: 'id', label: 'Id', type: 'string' },
+          { name: 'id', label: 'Id', type: 'string', noSort: true },
           { name: 'name', label: 'Name', type: 'string' },
           { name: 'age', label: 'Age', type: 'number' },
         ] }
