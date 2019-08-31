@@ -17,9 +17,9 @@ import clsx from 'clsx';
 import React, { Component, ComponentType, forwardRef, ForwardRefExoticComponent, Ref } from 'react';
 
 import { deepGet } from '../../lib';
-import { DVKAction } from './defaultActions';
-import { DVKColumn, DVKPagination } from './domain';
 
+import { DVKAction } from './defaultActions';
+import { DVKColumn, DVKPagination, DVKSort } from './domain';
 import styles from './Table.styles';
 
 export type MenuActionProps = {
@@ -30,7 +30,10 @@ export type MenuActionProps = {
   Icon?: ComponentType
 }
 
-const MenuAction: ForwardRefExoticComponent<MenuActionProps> = forwardRef(({ name, label, color, onClick, actionTarget, closeActionsMenu, Icon }, ref: Ref<HTMLLIElement>) => {
+const MenuAction: ForwardRefExoticComponent<MenuActionProps> = forwardRef((
+  { name, label, color, onClick, actionTarget, closeActionsMenu, Icon },
+  ref: Ref<HTMLLIElement>,
+) => {
   if (name === 'divider') return <Divider/>;
   if (!onClick || !closeActionsMenu || !Icon) return null;
 
@@ -50,11 +53,9 @@ const MenuAction: ForwardRefExoticComponent<MenuActionProps> = forwardRef(({ nam
 });
 
 export type DVKTableProps = {
-  // ...DVKPagination
-  page?: number,
-  rowsPerPage?: number,
-  order?: 'desc' | 'asc',
-  orderBy?: string,
+  pagination?: DVKPagination
+  sort?: DVKSort | null
+  onPaginationSortUpdate?: (pagination: DVKPagination | undefined, sort: DVKSort | null | undefined) => void,
 
   total?: number,
   className?: string,
@@ -63,7 +64,6 @@ export type DVKTableProps = {
   columns: DVKColumn[],
 
   onRowClick?: (row: any) => void,
-  onUpdatePagination?: (pagination: DVKPagination) => void,
 
   classes: any,
 }
@@ -86,16 +86,22 @@ class DVKTable extends Component<DVKTableProps, DVKTableState> {
   };
 
   handleSort = (property: string) => {
-    const { orderBy, order, rowsPerPage, onUpdatePagination } = this.props;
-    if (!onUpdatePagination || !rowsPerPage) return;
-    const sort = orderBy === property && order === 'asc' ? 'desc' : 'asc';
-    onUpdatePagination({ page: 0, rowsPerPage, order: sort, orderBy: property });
+    const { onPaginationSortUpdate, sort, pagination } = this.props;
+    if (!onPaginationSortUpdate) return;
+
+    const { orderBy, order } = sort || { orderBy: '', order: '' };
+    const newOrder = orderBy === property && order === 'asc' ? 'desc' : 'asc';
+    onPaginationSortUpdate(
+      pagination ? { ...pagination, page: 0 } : undefined,
+      { order: newOrder, orderBy: property },
+    );
   };
 
   handleChangePage = (_event: React.MouseEvent<HTMLButtonElement> | null, page: number) => {
-    const { orderBy, order, rowsPerPage, onUpdatePagination } = this.props;
-    if (!onUpdatePagination || !rowsPerPage || !orderBy || !order) return;
-    onUpdatePagination({ page, rowsPerPage, orderBy, order });
+    const { onPaginationSortUpdate, sort, pagination } = this.props;
+    if (!onPaginationSortUpdate || !pagination) return;
+
+    onPaginationSortUpdate({ ...pagination, page }, sort);
   };
 
   closeActionsMenu = () => this.setState({ actionsMenuAnchor: undefined, actionTarget: undefined });
@@ -115,7 +121,7 @@ class DVKTable extends Component<DVKTableProps, DVKTableState> {
       </TableCell>;
     }
 
-    return <TableCell key={ column.name } align={ column.numeric ? 'right' : 'left' }>
+    return <TableCell key={ column.name } align={ column.type === 'number' ? 'right' : 'left' }>
       { deepGet(row, column.name) }
     </TableCell>;
   }
@@ -144,9 +150,9 @@ class DVKTable extends Component<DVKTableProps, DVKTableState> {
   renderTable() {
     const {
       classes, className, rows, columns, onRowClick, actions,
-      order, orderBy, rowsPerPage = 0, total, page = 0, // pagination; if `total` is falsy, no pagination is rendered; if `orderBy` is falsy, no sort is rendered
+      pagination, sort, total,
     } = this.props;
-    const emptyRows = (total && (rowsPerPage - Math.min(rowsPerPage, total - page * rowsPerPage))) || 0;
+    const emptyRows = (pagination && total && (pagination.rowsPerPage - Math.min(pagination.rowsPerPage, total - pagination.page * pagination.rowsPerPage))) || 0;
 
     return (
       <Table className={ className }>
@@ -154,16 +160,16 @@ class DVKTable extends Component<DVKTableProps, DVKTableState> {
           <TableRow>
             { columns.map(column => <TableCell
               key={ column.name }
-              align={ column.numeric ? 'right' : 'left' }
-              sortDirection={ orderBy === column.name ? order : false }>
-              { orderBy ? <Tooltip
+              align={ column.type === 'number' ? 'right' : 'left' }
+              sortDirection={ sort && sort.orderBy === column.name ? sort.order : false }>
+              { (sort !== undefined) && !column.noSort ? <Tooltip
                   title="Sort"
-                  placement={ column.numeric ? 'bottom-end' : 'bottom-start' }
+                  placement={ column.type === 'number' ? 'bottom-end' : 'bottom-start' }
                   enterDelay={ 300 }
                 >
                   <TableSortLabel
-                    active={ orderBy === column.name }
-                    direction={ order }
+                    active={ (sort && sort.orderBy === column.name) || undefined }
+                    direction={ (sort && sort.order) || undefined }
                     onClick={ this.createSortHandler(column.name) }
                   >
                     { column.label }
@@ -198,8 +204,10 @@ class DVKTable extends Component<DVKTableProps, DVKTableState> {
   }
 
   renderPagination() {
-    const { rowsPerPage, total, page, classes } = this.props;
-    if (!total || !rowsPerPage || isNaN(page!)) return;
+    const { pagination, total, classes } = this.props;
+    if (!total || !pagination) return;
+    const { rowsPerPage, page } = pagination;
+
     return (
       <TablePagination
         component="div"

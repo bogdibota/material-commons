@@ -10,6 +10,9 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1),
     width: 400,
   },
+  bigCard: {
+    width: 'auto',
+  },
   pre: {
     whiteSpace: 'pre-wrap',
     wordWrap: 'break-word',
