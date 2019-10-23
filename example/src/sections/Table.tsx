@@ -8,7 +8,7 @@ import useStyles from '../styles';
 function reduceRows(oldRows: any[], payload: { type: string, data: any }) {
   switch (payload.type) {
     case 'add':
-      return [ ...oldRows, ...payload.data ];
+      return [...oldRows, ...payload.data];
     case 'sort':
       const { order, orderBy } = payload.data;
       return oldRows.sort((a, b) => (order === 'desc' ? -1 : 1) * (a[orderBy] > b[orderBy] ? 1 : -1));
@@ -20,14 +20,15 @@ function reduceRows(oldRows: any[], payload: { type: string, data: any }) {
 const TableSection = () => {
   const { card, bigCard } = useStyles();
 
-  const [ sort, setSort ] = useState<DVKSort | null>(null);
-  const [ rows, dispatch ] = useReducer(reduceRows, []);
+  const [sort, setSort] = useState<DVKSort | null>(null);
+  const [rows, dispatch] = useReducer(reduceRows, []);
 
   function createRow() {
     return {
       id: uuid(),
       name: 'ana are mere',
       age: Math.random() * 100,
+      match: Math.random() * 100,
     };
   }
 
@@ -53,7 +54,8 @@ const TableSection = () => {
         columns={ [
           { name: 'id', label: 'Id', type: 'string', noSort: true },
           { name: 'name', label: 'Name', type: 'string' },
-          { name: 'age', label: 'Age', type: 'number' },
+          { name: 'age', label: 'Age', type: 'number', project: it => Math.round(it).toString() },
+          { name: 'match', label: 'Match', type: 'number', project: it => `${ Math.round(it) }%` },
         ] }
         rows={ rows }
         actions={ createDefaultActions({ onDelete: console.log, onEdit: console.log, onClone: console.log }) }
