@@ -12,14 +12,14 @@ export default function ModalSection() {
   const { isOpen: isInfoModalOpen, open: openInfoModal, close: closeInfoModal } = useModal();
   const { isOpen: isComplexInfoModalOpen, open: openComplexInfoModal, close: closeComplexInfoModal } = useModal();
 
-  const [ snackbarKey, triggerSnackbar ] = useIncrementalKey();
+  const [snackbarKey, triggerSnackbar] = useIncrementalKey();
   const snackbarRef = useRef<SuccessSnackbar>(null);
 
   console.log('Render called');
 
   useEffect(() => {
     console.log('I wanna be called once');
-  }, [ openInfoModal ]);
+  }, [openInfoModal]);
 
 
   return <div className={ container }>

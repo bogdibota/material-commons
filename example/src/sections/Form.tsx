@@ -129,7 +129,7 @@ const FormSection: FC = () => {
             name: 'location',
             label: 'Location',
             type: 'select',
-            values: [{ label: 'Romania', name: 1 }, { label: 'Not Romania', name: 2 }],
+            values: [{ label: 'Romania', name: '1' }, { label: 'Not Romania', name: '2' }],
             infoModal: {
               message: 'Here you should provide your location.',
               title: 'LOCATIONNN',
