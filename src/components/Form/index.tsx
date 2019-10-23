@@ -19,6 +19,7 @@ import { DVKField, DVKFieldMashed, DVKObject, DVKValue, FieldWithErrorManagement
 import InputCheckbox from './input/Checkbox';
 import InputDateTime from './input/DateTime';
 import InputDefault from './input/Default';
+import InputHidden from './input/Hidden';
 import InputImage from './input/Image';
 import InputList from './input/List';
 import InputSelect from './input/Select';
@@ -54,7 +55,7 @@ function stripSyntheticIds(obj: DVKObject): DVKObject {
       [key]: Array.isArray(obj[key])
         ? (obj[key] as DVKValue[]).map((value: any) => Object.keys(value).reduce((sAcc, sKey) => {
           // we also strip typename, so the obj could be received and sent directly to apollo
-          if ([ 'syntheticId', '__typename' ].indexOf(sKey) > -1) return sAcc;
+          if (['syntheticId', '__typename'].indexOf(sKey) > -1) return sAcc;
           return { ...sAcc, [sKey]: value[sKey] };
         }, {}))
         : obj[key],
@@ -82,17 +83,17 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
 
                                                     InputModal = Fragment, // hack to avoid circular dependencies; better solutions are welcome
                                                   }) => {
-  const [ obj, setObj ] = useState({ ...defaultValue });
+  const [obj, setObj] = useState({ ...defaultValue });
   const formId = useMemo(() => {
     setObj({ ...defaultValue });
     return uuid();
-  }, [ defaultValue ]);
+  }, [defaultValue]);
 
   const { isOpen: isInfoModalOpen, data: infoModalData, open: openInfoModal, close: closeInfoModal } = useModal();
 
   useEffect(() => {
     onChange(obj);
-  }, [ obj, onChange ]);
+  }, [obj, onChange]);
 
   function handleSubmit(event: React.MouseEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -225,6 +226,8 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
 
           { ...errorProps }
         />;
+      case 'hidden':
+        return <InputHidden { ...commonProps }/>;
       default:
         return <InputDefault
           { ...commonProps }
@@ -241,7 +244,7 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
   }
 
   function renderInputBox(field: DVKField): ReactNode {
-    return <Box key={ field.name } display="flex">
+    return <Box key={ field.name } display="flex" style={ field.type === 'hidden' ? { display: 'none' } : {} }>
       <Box flexGrow={ 1 }>
         { renderInputField(field as DVKFieldMashed) }
       </Box>

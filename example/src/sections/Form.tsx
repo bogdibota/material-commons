@@ -6,15 +6,16 @@ import useStyles from '../styles';
 const FormSection: FC = () => {
   const { card, pre } = useStyles();
 
-  const [ submittedEmpty, submitEmpty ] = useState();
-  const [ submittedDefaulted, submitDefaulted ] = useState();
-  const [ changedEmpty, changeEmpty ] = useState();
-  const [ changedDefaulted, changeDefaulted ] = useState();
+  const [submittedEmpty, submitEmpty] = useState();
+  const [submittedDefaulted, submitDefaulted] = useState();
+  const [changedEmpty, changeEmpty] = useState();
+  const [changedDefaulted, changeDefaulted] = useState();
 
   const defaultValue = useMemo(() => ({
     id: 123,
     name: 'Dorel Valorosu',
     email: 'dorel@dorel.com',
+    hiddenId: 'hidden 123',
   }), []);
 
   return <Grid container wrap="wrap">
@@ -107,6 +108,7 @@ const FormSection: FC = () => {
               title: 'ID TITLE',
             },
           },
+          { name: 'hiddenId', type: 'hidden' },
           {
             name: 'name',
             label: 'string name',
@@ -127,7 +129,7 @@ const FormSection: FC = () => {
             name: 'location',
             label: 'Location',
             type: 'select',
-            values: [ { label: 'Romania', name: 1 }, { label: 'Not Romania', name: 2 } ],
+            values: [{ label: 'Romania', name: 1 }, { label: 'Not Romania', name: 2 }],
             infoModal: {
               message: 'Here you should provide your location.',
               title: 'LOCATIONNN',

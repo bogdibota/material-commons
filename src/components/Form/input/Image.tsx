@@ -28,15 +28,15 @@ const InputImage: FC<DVKImageField & PropsWithErrorManagement> = ({
                                                                   }) => {
   const { obj, updateProperty } = useContext(FormContext);
   const classes = useStyles();
-  const [ selectedFileName, setSelectedFileName ] = useState(deepGet(obj, `${ name }.fileName`, ''));
-  const [ thumbnail, setThumbnail ] = useState(deepGet(obj, `${ name }.thumbnail`, undefined));
+  const [selectedFileName, setSelectedFileName] = useState(deepGet(obj, `${ name }.fileName`, ''));
+  const [thumbnail, setThumbnail] = useState(deepGet(obj, `${ name }.thumbnail`, undefined));
   const fileReader = useMemo(() => new FileReader(), []);
 
   useEffect(() => {
     fileReader.onload = function () {
       setThumbnail(fileReader.result);
     };
-  }, [ fileReader ]);
+  }, [fileReader]);
 
   function onFileSelected({ target: { files } }: ChangeEvent<HTMLInputElement>) {
     if (!files || !files[0]) return;
@@ -65,7 +65,7 @@ const InputImage: FC<DVKImageField & PropsWithErrorManagement> = ({
       onChange={ onFileSelected }
     />
     <label htmlFor={ `${ name }-hidden` }>
-      <FormControl fullWidth>
+      <FormControl fullWidth margin="dense">
         <InputLabel htmlFor={ name } error={ hasError }>{ label }</InputLabel>
         <Input
           id={ name }

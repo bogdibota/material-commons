@@ -30,6 +30,7 @@ const InputSelect: FunctionComponent<DVKSelectField & PropsWithErrorManagement> 
     error={ hasError }
     required={ required }
     fullWidth
+    margin="dense"
   >
     <InputLabel htmlFor={ name }>{ label }</InputLabel>
     <Select

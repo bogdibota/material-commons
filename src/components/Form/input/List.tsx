@@ -12,9 +12,10 @@ import ConfirmationModal from '../../Modals/ConfirmationModal';
 import { FlexExpander } from '../../placeholders';
 import DVKTable from '../../Table';
 import createDefaultActions from '../../Table/defaultActions';
+import { DVKColumn } from '../../Table/domain';
 
 import FormContext from '../context';
-import { DVKListField, DVKListItem } from '../domain';
+import { DVKListField, DVKListItem, isHiddenField } from '../domain';
 import useStyles from '../styles';
 
 const InputList: FunctionComponent<DVKListField> = ({
@@ -33,13 +34,13 @@ const InputList: FunctionComponent<DVKListField> = ({
   const { isOpen: isAddModalOpen, open: openAddModal, close: closeAddModal } = useModal();
   const { isOpen: isEditModalOpen, data: editModalData = {}, open: openEditModal, close: closeEditModal } = useModal<any>();
   const { isOpen: isDeleteModalOpen, data: deleteModalData = {}, open: openDeleteModal, close: closeDeleteModal } = useModal<any>();
-  const [ createKey, incrementCreateKey ] = useIncrementalKey();
+  const [createKey, incrementCreateKey] = useIncrementalKey();
 
-  const values = useMemo(() => deepGet(obj, name), [ obj, name ]);
+  const values = useMemo(() => deepGet(obj, name), [obj, name]);
   const actions = useMemo(() => createDefaultActions({
     onEdit: openEditModal,
     onDelete: openDeleteModal,
-  }), [ openEditModal, openDeleteModal ]);
+  }), [openEditModal, openDeleteModal]);
 
   function isEqual(val1: DVKListItem, val2: DVKListItem) {
     return (val1.id && val1.id === val2.id) || (val1.syntheticId && val1.syntheticId === val2.syntheticId);
@@ -58,7 +59,8 @@ const InputList: FunctionComponent<DVKListField> = ({
         <Grid item className={ classes.expansionPanelTable }>
           { values.length
             ? <DVKTable
-              columns={ fields }
+              // cast is safe because we checked it before
+              columns={ fields.filter(field => !isHiddenField(field)) as DVKColumn[] }
               actions={ actions }
               rows={ values }
               onRowClick={ openEditModal }
@@ -83,7 +85,7 @@ const InputList: FunctionComponent<DVKListField> = ({
       fields={ fields }
       onClose={ closeAddModal }
       onCreate={ (newValue: DVKListItem) => {
-        updatePropertyF(name, (oldValues) => [ ...(oldValues as DVKListItem[]), { ...newValue, syntheticId: uuid() } ]);
+        updatePropertyF(name, (oldValues) => [...(oldValues as DVKListItem[]), { ...newValue, syntheticId: uuid() }]);
         incrementCreateKey();
       } }
     />
