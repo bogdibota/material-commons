@@ -121,8 +121,10 @@ class DVKTable extends Component<DVKTableProps, DVKTableState> {
       </TableCell>;
     }
 
+    const value = deepGet(row, column.name);
+
     return <TableCell key={ column.name } align={ column.type === 'number' ? 'right' : 'left' }>
-      { deepGet(row, column.name) }
+      { column.project ? column.project(value) : value }
     </TableCell>;
   }
 
@@ -214,7 +216,7 @@ class DVKTable extends Component<DVKTableProps, DVKTableState> {
         backIconButtonProps={ { 'aria-label': 'Previous Page' } }
         nextIconButtonProps={ { 'aria-label': 'Next Page' } }
 
-        rowsPerPageOptions={ [ rowsPerPage ] }
+        rowsPerPageOptions={ [rowsPerPage] }
         count={ total }
         rowsPerPage={ rowsPerPage }
         page={ page! }
