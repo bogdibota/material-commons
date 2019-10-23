@@ -75,12 +75,16 @@ export type DVKListField = LabeledField<DVKListType> & {
   InputModal: any
 }
 
+export type DVKSelectFieldValue = string | {
+  name: string,
+  label: string,
+}
 export type DVKSelectType = 'select';
 export type DVKSelectField = LabeledField<DVKSelectType> & FieldWithErrorManagement & {
   required?: boolean,
   autoFocus?: boolean,
   disabled?: boolean,
-  values: any[],
+  values: DVKSelectFieldValue[],
 }
 
 export type DVKDefaultType = 'text' | 'email' | 'password' | 'number';
