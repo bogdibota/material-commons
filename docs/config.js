@@ -1,14 +1,14 @@
 const config = {
   'gatsby': {
     'pathPrefix': '/',
-    'siteUrl': 'https://learn.hasura.io',
+    'siteUrl': 'https://material-commons.dvkiin.xyz',
     'gaTrackingId': null,
   },
   'header': {
-    'logo': 'https://graphql-engine-cdn.hasura.io/learn-hasura/assets/homepage/favicon.png',
-    'logoLink': 'https://learn.hasura.io',
-    'title': 'Gatsby Gitbook Boilerplate',
-    'githubUrl': 'https://github.com/hasura/gatsby-gitbook-boilerplate',
+    'logo': 'https://optioffer.com/wp-content/uploads/2019/10/android-chrome-512x512-1.png',
+    'logoLink': '/',
+    'title': '@dvkiin/material-commons',
+    'githubUrl': 'https://github.com/bogdibota/material-commons',
     'helpUrl': '',
     'tweetText': '',
     'links': [
@@ -28,17 +28,17 @@ const config = {
       '/codeblock',
     ],
     'links': [
-      { 'text': 'Hasura', 'link': 'https://hasura.io' },
+      { 'text': 'OptiOffer', 'link': 'https://optioffer.com' },
     ],
     'frontline': false,
     'ignoreIndex': true,
   },
   'siteMetadata': {
-    'title': 'Gatsby Gitbook Boilerplate | Hasura',
-    'description': 'Documentation built with mdx. Powering learn.hasura.io ',
+    'title': 'Docs: @dvkiin/material-commons | OptiOffer',
+    'description': 'Documentation and code examples for @dvkiin/material-commons lib. Powered by optioffer.com',
     'ogImage': null,
-    'docsLocation': 'https://github.com/hasura/gatsby-gitbook-boilerplate/tree/master/content',
-    'favicon': 'https://graphql-engine-cdn.hasura.io/img/hasura_icon_black.svg',
+    'docsLocation': 'https://github.com/bogdibota/material-commons/tree/master/docs/content',
+    'favicon': 'https://optioffer.com/wp-content/uploads/2019/10/cropped-Favicon-192x192.png',
   },
 };
 

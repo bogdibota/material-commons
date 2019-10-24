@@ -1,6 +1,7 @@
 require('dotenv').config();
 const queries = require('./src/utils/algolia');
 const config = require('./config');
+
 const plugins = [
   'gatsby-plugin-sitemap',
   'gatsby-plugin-sharp',
@@ -51,6 +52,7 @@ const plugins = [
     },
   },
 ];
+
 if (config.header.search && config.header.search.enabled && config.header.search.algoliaAppId && config.header.search.algoliaAdminKey) {
   plugins.push({
       resolve: `gatsby-plugin-algolia`,
@@ -63,6 +65,7 @@ if (config.header.search && config.header.search.enabled && config.header.search
     },
   );
 }
+
 module.exports = {
   pathPrefix: config.gatsby.pathPrefix,
   siteMetadata: {

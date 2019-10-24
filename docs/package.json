@@ -1,8 +1,8 @@
 {
-  "name": "gatsby-gitbook-boilerplate",
+  "name": "@dvkiin/material-commons-docs",
   "private": true,
-  "description": "Documentation, built with mdx",
-  "author": "Praveen <praveen@hasura.io> (@praveenweb)",
+  "description": "Documentation and examples for @dvkiin/material-commons",
+  "author": "Bogdan Bota <bogdan.bota@optioffer.com>",
   "version": "0.0.1",
   "dependencies": {
     "@babel/plugin-proposal-export-default-from": "^7.5.2",
