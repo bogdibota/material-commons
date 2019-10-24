@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import Helmet from "react-helmet";
-import { graphql } from "gatsby";
-import MDXRenderer from "gatsby-plugin-mdx/mdx-renderer";
-import styled, { injectGlobal } from "react-emotion";
-import { Layout, Link } from "$components";
+import { Layout, Link } from '$components';
+import { graphql } from 'gatsby';
+import MDXRenderer from 'gatsby-plugin-mdx/mdx-renderer';
+import React, { Component } from 'react';
+import styled, { injectGlobal } from 'react-emotion';
+import Helmet from 'react-helmet';
+import config from '../../config';
 import NextPrevious from '../components/NextPrevious';
 import '../components/styles.css';
-import config from '../../config';
 
 const forcedNavOrder = config.sidebar.forcedNavOrder;
 
@@ -76,14 +76,14 @@ export default class MDXRuntimeTest extends Component {
       allMdx,
       mdx,
       site: {
-        siteMetadata: { docsLocation, title }
-      }
+        siteMetadata: { docsLocation, title },
+      },
     } = data;
     const gitHub = require('../components/images/github.svg');
 
     const navItems = allMdx.edges
       .map(({ node }) => node.fields.slug)
-      .filter(slug => slug !== "/")
+      .filter(slug => slug !== '/')
       .sort()
       .reduce(
         (acc, cur) => {
@@ -91,15 +91,15 @@ export default class MDXRuntimeTest extends Component {
             return { ...acc, [cur]: [cur] };
           }
 
-          const prefix = cur.split("/")[1];
+          const prefix = cur.split('/')[1];
 
-          if (prefix && forcedNavOrder.find(url => url === `/${prefix}`)) {
-            return { ...acc, [`/${prefix}`]: [...acc[`/${prefix}`], cur] };
+          if (prefix && forcedNavOrder.find(url => url === `/${ prefix }`)) {
+            return { ...acc, [`/${ prefix }`]: [...acc[`/${ prefix }`], cur] };
           } else {
             return { ...acc, items: [...acc.items, cur] };
           }
         },
-        { items: [] }
+        { items: [] },
       );
 
     const nav = forcedNavOrder
@@ -108,9 +108,9 @@ export default class MDXRuntimeTest extends Component {
       }, [])
       .concat(navItems.items)
       .map(slug => {
-        if(slug) {
+        if (slug) {
           const { node } = allMdx.edges.find(
-            ({ node }) => node.fields.slug === slug
+            ({ node }) => node.fields.slug === slug,
           );
 
           return { title: node.fields.title, url: node.fields.slug };
@@ -125,32 +125,32 @@ export default class MDXRuntimeTest extends Component {
     canonicalUrl = canonicalUrl + mdx.fields.slug;
 
     return (
-      <Layout {...this.props}>
+      <Layout { ...this.props }>
         <Helmet>
-          {metaTitle ? <title>{metaTitle}</title> : null }
-          {metaTitle ? <meta name="title" content={metaTitle} /> : null}
-          {metaDescription ? <meta name="description" content={metaDescription} /> : null}
-          {metaTitle ? <meta property="og:title" content={metaTitle} /> : null}
-          {metaDescription ? <meta property="og:description" content={metaDescription} /> : null}
-          {metaTitle ? <meta property="twitter:title" content={metaTitle} /> : null}
-          {metaDescription ? <meta property="twitter:description" content={metaDescription} /> : null}
-          <link rel="canonical" href={canonicalUrl} />
+          { metaTitle ? <title>{ metaTitle }</title> : null }
+          { metaTitle ? <meta name="title" content={ metaTitle }/> : null }
+          { metaDescription ? <meta name="description" content={ metaDescription }/> : null }
+          { metaTitle ? <meta property="og:title" content={ metaTitle }/> : null }
+          { metaDescription ? <meta property="og:description" content={ metaDescription }/> : null }
+          { metaTitle ? <meta property="twitter:title" content={ metaTitle }/> : null }
+          { metaDescription ? <meta property="twitter:description" content={ metaDescription }/> : null }
+          <link rel="canonical" href={ canonicalUrl }/>
         </Helmet>
-        <div className={'titleWrapper'}>
-          <h1 className={'title'}>
-            {mdx.fields.title}
+        <div className={ 'titleWrapper' }>
+          <h1 className={ 'title' }>
+            { mdx.fields.title }
           </h1>
-          <Edit className={'mobileView'}>
-            <Link className={'gitBtn'} to={`${docsLocation}/${mdx.parent.relativePath}`}>
-              <img src={gitHub} alt={'Github logo'} /> Edit on GitHub
+          <Edit className={ 'mobileView' }>
+            <Link className={ 'gitBtn' } to={ `${ docsLocation }/${ mdx.parent.relativePath }` }>
+              <img src={ gitHub } alt={ 'Github logo' }/> Edit on GitHub
             </Link>
           </Edit>
         </div>
-        <div className={'mainWrapper'}>
-          <MDXRenderer>{mdx.body}</MDXRenderer>
+        <div className={ 'mainWrapper' }>
+          <MDXRenderer>{ mdx.body }</MDXRenderer>
         </div>
-        <div className={'addPaddTopBottom'}>
-          <NextPrevious mdx={mdx} nav={nav} />
+        <div className={ 'addPaddTopBottom' }>
+          <NextPrevious mdx={ mdx } nav={ nav }/>
         </div>
       </Layout>
     );

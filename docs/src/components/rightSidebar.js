@@ -1,9 +1,8 @@
-import React from "react";
-import { StaticQuery, graphql } from "gatsby";
-import styled from "react-emotion";
-import Link from "./link";
-import './styles.css';
+import { graphql, StaticQuery } from 'gatsby';
+import React from 'react';
+import styled from 'react-emotion';
 import config from '../../config';
+import './styles.css';
 
 const forcedNavOrder = config.sidebar.forcedNavOrder;
 
@@ -27,19 +26,19 @@ const Sidebar = styled('aside')`
 
 // eslint-disable-next-line no-unused-vars
 const ListItem = styled(({ className, active, level, ...props }) => {
-    return (
-      <li className={className}>
-        <a href={props.to} {...props} />
-      </li>
-    );
+  return (
+    <li className={ className }>
+      <a href={ props.to } { ...props } />
+    </li>
+  );
 })`
   list-style: none;
 
   a {
     color: #5C6975;
     text-decoration: none;
-    font-weight: ${({ level }) => (level === 0 ? 700 : 400)};
-    padding: 0.45rem 0 0.45rem ${props => 2 + (props.level || 0) * 1}rem;
+    font-weight: ${ ({ level }) => (level === 0 ? 700 : 400) };
+    padding: 0.45rem 0 0.45rem ${ props => 2 + (props.level || 0) * 1 }rem;
     display: block;
     position: relative;
 
@@ -47,15 +46,15 @@ const ListItem = styled(({ className, active, level, ...props }) => {
       color: rgb(116, 76, 188) !important;
     }
 
-    ${props =>
-      props.active &&
-      `
+    ${ props =>
+  props.active &&
+  `
       color: #663399;
       border-color: rgb(230,236,241) !important;
       border-style: solid none solid solid;
       border-width: 1px 0px 1px 1px;
       background-color: #fff;
-    `} // external link icon
+    ` } // external link icon
     svg {
       float: right;
       margin-right: 1rem;
@@ -65,7 +64,7 @@ const ListItem = styled(({ className, active, level, ...props }) => {
 
 const SidebarLayout = ({ location }) => (
   <StaticQuery
-    query={graphql`
+    query={ graphql`
       query {
         allMdx {
           edges {
@@ -78,25 +77,25 @@ const SidebarLayout = ({ location }) => (
           }
         }
       }
-    `}
-    render={({ allMdx }) => {
+    ` }
+    render={ ({ allMdx }) => {
       let navItems = [];
       let finalNavItems;
       if (allMdx.edges !== undefined && allMdx.edges.length > 0) {
         const navItems = allMdx.edges.map((item, index) => {
           let innerItems;
-          if(item !== undefined) {
+          if (item !== undefined) {
             if ((item.node.fields.slug === location.pathname) || (config.gatsby.pathPrefix + item.node.fields.slug) === location.pathname) {
               if (item.node.tableOfContents.items) {
                 innerItems = item.node.tableOfContents.items.map((innerItem, index) => {
                   const itemId = innerItem.title ? innerItem.title.replace(/\s+/g, '').toLowerCase() : '#';
                   return (
                     <ListItem
-                      key={index}
-                      to={`#${itemId}`}
-                      level={1}
+                      key={ index }
+                      to={ `#${ itemId }` }
+                      level={ 1 }
                     >
-                      {innerItem.title}
+                      { innerItem.title }
                     </ListItem>
                   );
                 });
@@ -112,9 +111,9 @@ const SidebarLayout = ({ location }) => (
       if (finalNavItems && finalNavItems.length) {
         return (
           <Sidebar>
-            <ul className={'rightSideBarUL'}>
-              <div className={'rightSideTitle'}>CONTENTS</div>
-              {finalNavItems}
+            <ul className={ 'rightSideBarUL' }>
+              <div className={ 'rightSideTitle' }>CONTENTS</div>
+              { finalNavItems }
             </ul>
           </Sidebar>
         );
@@ -125,7 +124,7 @@ const SidebarLayout = ({ location }) => (
           </Sidebar>
         );
       }
-    }}
+    } }
   />
 );
 

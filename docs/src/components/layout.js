@@ -1,10 +1,10 @@
-import React from "react";
-import styled from "react-emotion";
-import { MDXProvider } from "@mdx-js/react";
-import ThemeProvider from "./themeProvider";
-import mdxComponents from "./mdxComponents";
-import Sidebar from "./sidebar";
-import RightSidebar from "./rightSidebar";
+import { MDXProvider } from '@mdx-js/react';
+import React from 'react';
+import styled from 'react-emotion';
+import mdxComponents from './mdxComponents';
+import RightSidebar from './rightSidebar';
+import Sidebar from './sidebar';
+import ThemeProvider from './themeProvider';
 
 const Wrapper = styled('div')`
   display: flex;
@@ -42,17 +42,17 @@ const RightSideBarWidth = styled('div')`
   width: 224px;
 `;
 const Layout = ({ children, location }) => (
-  <ThemeProvider location={location}>
-    <MDXProvider components={mdxComponents}>
+  <ThemeProvider location={ location }>
+    <MDXProvider components={ mdxComponents }>
       <Wrapper>
-        <LeftSideBarWidth className={'hidden-xs'}>
-          <Sidebar location={location} />
+        <LeftSideBarWidth className={ 'hidden-xs' }>
+          <Sidebar location={ location }/>
         </LeftSideBarWidth>
         <Content>
-          <MaxWidth>{children}</MaxWidth>
+          <MaxWidth>{ children }</MaxWidth>
         </Content>
-        <RightSideBarWidth className={'hidden-xs'}>
-          <RightSidebar location={location} />
+        <RightSideBarWidth className={ 'hidden-xs' }>
+          <RightSidebar location={ location }/>
         </RightSideBarWidth>
       </Wrapper>
     </MDXProvider>

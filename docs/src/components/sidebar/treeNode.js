@@ -1,55 +1,55 @@
-import React from "react";
-import OpenedSvg from '../images/opened';
-import ClosedSvg from '../images/closed';
+import React from 'react';
 import config from '../../../config';
-import Link from "../link";
+import ClosedSvg from '../images/closed';
+import OpenedSvg from '../images/opened';
+import Link from '../link';
 
-const TreeNode = ({className = '', setCollapsed, collapsed, url, title, items, ...rest}) => {
+const TreeNode = ({ className = '', setCollapsed, collapsed, url, title, items, ...rest }) => {
   const isCollapsed = collapsed[url];
   const collapse = () => {
     setCollapsed(url);
-  }
+  };
   const hasChildren = items.length !== 0;
   let location;
-  if(typeof(document) != 'undefined') {
+  if (typeof (document) != 'undefined') {
     location = document.location;
   }
   const active =
     location && (location.pathname === url || location.pathname === (config.gatsby.pathPrefix + url));
-  const calculatedClassName = `${className} item ${active ? 'active' : ''}`;
+  const calculatedClassName = `${ className } item ${ active ? 'active' : '' }`;
   return (
     <li
-      className={calculatedClassName}
+      className={ calculatedClassName }
     >
-      {!config.sidebar.frontLine && title && hasChildren ? (
+      { !config.sidebar.frontLine && title && hasChildren ? (
         <button
-          onClick={collapse}
+          onClick={ collapse }
           className='collapser'>
-          {!isCollapsed ? <OpenedSvg /> : <ClosedSvg />}
+          { !isCollapsed ? <OpenedSvg/> : <ClosedSvg/> }
         </button>
-      ) : null}
+      ) : null }
 
-      {title && (
+      { title && (
         <Link
-          to={url}
+          to={ url }
         >
-          {title}
+          { title }
         </Link>)
       }
 
-      {!isCollapsed && hasChildren ? (
+      { !isCollapsed && hasChildren ? (
         <ul>
-          {items.map((item) => (
+          { items.map((item) => (
             <TreeNode
-              key={item.url}
-              setCollapsed={setCollapsed}
-              collapsed={collapsed}
-              {...item}
+              key={ item.url }
+              setCollapsed={ setCollapsed }
+              collapsed={ collapsed }
+              { ...item }
             />
-          ))}
+          )) }
         </ul>
-      ) : null}
+      ) : null }
     </li>
   );
-}
-export default TreeNode
+};
+export default TreeNode;
