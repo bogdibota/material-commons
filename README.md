@@ -1,10 +1,6 @@
-## dvkiin/material-commons
+## @dvkiin/material-commons [![NPM](https://img.shields.io/npm/v/@dvkiin/material-commons.svg)](https://www.npmjs.com/package/@dvkiin/material-commons) [![Build Status](https://travis-ci.com/bogdibota/material-commons.svg?branch=master)](https://travis-ci.com/bogdibota/material-commons) [![Bundle Size](https://badgen.net/bundlephobia/minzip/@dvkiin/material-commons)](https://bundlephobia.com/result?p=@dvkiin/material-commons)
 
-This package is an extension for `material-ui` including, but not limited to, 
-a declarative 'form' and 'table' component.
-
-[![NPM](https://img.shields.io/npm/v/@dvkiin/material-commons.svg)](https://www.npmjs.com/package/@dvkiin/material-commons) 
-[![Build Status](https://travis-ci.com/bogdibota/material-commons.svg?branch=master)](https://travis-ci.com/bogdibota/material-commons)
+This library is intended as an extension to the incredible [material-ui](https://material-ui.com/) package.
 
 ### Instalation
 ```yarn add @dvkiin/material-commons```
@@ -13,36 +9,21 @@ or
 
 ```npm i @dvkiin/material-commons --save```
 
-### `DVKForm` fields support 
+### Dependencies
 
-   * [x] `text`
-   * [x] `number`
-   * [x] `email`
-   * [x] `password`
-   * [x] `select`
-   * [x] `list` (array of any objects also defined by `fields`)
-   * [x] `date` (using [@material-ui/pickers](https://github.com/mui-org/material-ui-pickers))
-   * [x] `time` (using [@material-ui/pickers](https://github.com/mui-org/material-ui-pickers))
-   * [x] `date-time` (using [@material-ui/pickers](https://github.com/mui-org/material-ui-pickers))
-   * [x] `image`
-   * [x] `checkbox`
+This library has no actual dependencies, but it's intended to be used on top of [react](https://reactjs.org/) and [material-ui](https://material-ui.com/). 
+Therefor we have the following `peerDependencies`: 
 
-### `DVKTable` fields support 
+ - "@material-ui/core": "^4.0.0"
+ - "@material-ui/icons": "^4.0.0"
+ - "@material-ui/pickers": "^3.2.2"
+ - "react": "^16.8.0"
+ - "react-dom": "^16.8.0"
 
-  - [x] `text` (default if not specified otherwise)
-  - [x] `number`
-  - [ ] `date`
-  - [ ] `time`
-  - [ ] `date-time`
-  - [x] `imageBase64`
- 
-### Current modals support 
+### Documentation and examples
 
- - `InputModal` (contains a form)
- - `ErrorModal`
- - `ConfirmationModal`
- - `SuccessSnackbar`
- 
-### Other provided components
+Documentation and examples are hosted [here](https://material-commons.dvkiin.xyz/).
 
- - `FloatingButton` - a FAB that actually floats
+### Licence
+
+MIT

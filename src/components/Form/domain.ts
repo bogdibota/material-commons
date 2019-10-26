@@ -9,6 +9,10 @@ export type DVKListItem = {
   syntheticId: string,
 }
 
+export type DVKInvalidFields = {
+  [key: string]: boolean | string
+}
+
 type BasicField<TType> = {
   name: string, type: TType,
 }

@@ -32,6 +32,7 @@ const config = {
     ],
     'links': [
       { 'text': 'OptiOffer', 'link': 'https://optioffer.com' },
+      { 'text': 'Github', 'link': 'https://github.com/bogdibota/material-commons' },
       { 'text': 'Issues', 'link': 'https://github.com/bogdibota/material-commons/issues' },
     ],
     'frontline': false,
