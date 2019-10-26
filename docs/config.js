@@ -25,10 +25,14 @@ const config = {
   'sidebar': {
     'forcedNavOrder': [
       '/introduction',
-      '/codeblock',
+      '/layout',
+      '/components',
+      '/validation',
+      '/helpers',
     ],
     'links': [
       { 'text': 'OptiOffer', 'link': 'https://optioffer.com' },
+      { 'text': 'Issues', 'link': 'https://github.com/bogdibota/material-commons/issues' },
     ],
     'frontline': false,
     'ignoreIndex': true,

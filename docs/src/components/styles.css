@@ -65,7 +65,7 @@ body {
 }
 
 .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
-  background-color: #542683;
+  background-color: #03ddd2;
 }
 
 .headerWrapper {
@@ -172,17 +172,17 @@ body {
 
 /* Header section starts here */
 .navBarDefault {
-  background-color: #372476;
+  background-color: #00aaa1;
   border-radius: 0;
   border-top: 0;
   margin-bottom: 0;
   border: 0;
   display: flex;
   align-items: center;
-  box-shadow: -1px 0px 4px 1px rgba(175, 158, 232, .4);
-  -webkit-box-shadow: -1px 0px 4px 1px rgba(175, 158, 232, .4);
-  -moz-box-shadow: -1px 0px 4px 1px rgba(175, 158, 232, .8);
-  -o-box-shadow: -1px 0px 4px 1px rgba(175, 158, 232, .4);
+  box-shadow: -1px 0px 4px 1px rgba(104, 255, 255, .4);
+  -webkit-box-shadow: -1px 0px 4px 1px rgba(104, 255, 255, .4);
+  -moz-box-shadow: -1px 0px 4px 1px rgba(104, 255, 255, .8);
+  -o-box-shadow: -1px 0px 4px 1px rgba(104, 255, 255, .4);
   z-index: 1;
   padding: 15px;
 }
@@ -201,12 +201,13 @@ body {
   padding: 0px 0px;
   display: flex;
   align-items: center;
-
 }
 
 .navBarBrand img {
-  width: 40px;
-  margin-right: 16px;
+  background-color: white;
+  border-radius: 50%;
+  width: 50px;
+  margin: -10px 16px -10px 0;
   display: inline-block;
 }
 
@@ -260,14 +261,14 @@ pre {
 .headerNav {
   font-family: 'Roboto';
   padding: 0px 24px;
-  color: rgb(116, 76, 188);
+  color: rgb(104, 255, 255);
   font-size: 16px;
   font-weight: 500;
   line-height: 1em;
 }
 
 .headerNav a {
-  color: rgb(116, 76, 188);
+  color: rgb(104, 255, 255);
   text-decoration: none;
 }
 
@@ -341,7 +342,7 @@ pre {
 }
 
 .hideFrontLine .active > a {
-  background-color: #542683;
+  background-color: #03ddd2;
   color: #fff !important;
 }
 
@@ -350,7 +351,7 @@ pre {
 }
 
 .active .collapser > svg > path {
-  fill: #663399 !important;
+  fill: #03ddd2 !important;
 }
 
 .firstLevel ul .item ul .item {
@@ -373,17 +374,17 @@ pre {
 }
 
 .sideBarUL .item > a:hover {
-  background-color: #542683;
+  background-color: #03ddd2;
   color: #fff !important;
 }
 
 .showFrontLine .item > a:hover {
-  background-color: #542683;
+  background-color: #03ddd2;
 }
 
 .showFrontLine .active > a {
   color: #fff;
-  background-color: #473485;
+  background-color: #00aaa1;
 }
 
 .sideBarUL .item .item {
@@ -405,7 +406,7 @@ pre {
   border-color: rgb(230, 236, 241) !important;
   border-style: solid none solid solid;
   border-width: 1px 0px 1px 1px;
-  background-color: #542683;
+  background-color: #03ddd2;
   color: #fff;
 }
 
@@ -422,7 +423,7 @@ pre {
   font-size: 32px;
   line-height: 1.5;
   font-weight: 500;
-  border-left: 2px solid rgb(116, 76, 188);
+  border-left: 2px solid rgb(104, 255, 255);
   padding: 0 16px;
   flex: 1;
   margin-top: 0;
@@ -562,13 +563,13 @@ pre {
 }
 
 .nextBtn:hover, .previousBtn:hover {
-  color: rgb(116, 76, 188);
+  color: rgb(104, 255, 255);
   text-decoration: none;
-  border: 1px solid rgb(116, 76, 188);
+  border: 1px solid rgb(104, 255, 255);
 }
 
 .nextBtn:hover .rightArrow, .previousBtn:hover .leftArrow {
-  color: rgb(116, 76, 188);
+  color: rgb(104, 255, 255);
 }
 
 /* tables.css */
