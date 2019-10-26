@@ -1,10 +1,11 @@
 {
   "name": "@dvkiin/material-commons",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Extra components for 'material-ui'",
   "author": "bogdibota",
   "license": "MIT",
   "repository": "https://github.com/bogdibota/material-commons",
+  "homepage": "https://material-commons.dvkiin.xyz/",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
