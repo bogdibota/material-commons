@@ -15,7 +15,7 @@ import { deepSet, useModal, uuid } from '../../lib';
 import InfoModal from '../Modals/InfoModal';
 
 import FormContext from './context';
-import { DVKField, DVKFieldMashed, DVKObject, DVKValue, FieldWithErrorManagement } from './domain';
+import { DVKField, DVKFieldMashed, DVKInvalidFields, DVKObject, DVKValue, FieldWithErrorManagement } from './domain';
 import InputCheckbox from './input/Checkbox';
 import InputDateTime from './input/DateTime';
 import InputDefault from './input/Default';
@@ -34,7 +34,7 @@ export type DVKFormProps = {
   renderActions?: (formId: string) => ReactElement | null,
   onSubmit?: (obj: DVKObject) => void,
   onChange?: (obj: DVKObject) => void,
-  invalidFields?: { [key: string]: boolean | string } | null,
+  invalidFields?: DVKInvalidFields | null,
   InputModal?: ComponentType,
 };
 

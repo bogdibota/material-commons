@@ -1,0 +1,90 @@
+---
+title: "Behold! The mighty Docs!"
+metaTitle: "Documentation: @dvkiin/material-commons"
+metaDescription: "The complete collection of documentation and examples for @dvkiin/material-common react library."
+---
+
+This library is intended as an extension to the incredible [material-ui](https://material-ui.com/) package.
+
+[![NPM](https://img.shields.io/npm/v/@dvkiin/material-commons.svg)](https://www.npmjs.com/package/@dvkiin/material-commons)
+[![Build Status](https://travis-ci.com/bogdibota/material-commons.svg?branch=master)](https://travis-ci.com/bogdibota/material-commons)
+[![Bundle Size](https://badgen.net/bundlephobia/minzip/@dvkiin/material-commons)](https://bundlephobia.com/result?p=@dvkiin/material-commons)
+
+## Vision
+**tl;dr:** Boilerplate is never good => we did it for you.
+
+Creating forms and tables was always a job full of boilerplate code. This is not only impractical and tedious to do, but it can generate a lot of bugs.
+To add on top, every new addition (like adding error management) has to be implemented over and over again. Also bugs. A lot of time can be lost with bugs.
+
+Of course you can improve this with nice reusable components or HOCs, but we already did that for you.
+
+
+## Solution
+**tl;dr:** Declare stuff => stuff works.
+
+Instead of writing copious amounts of code, how about only writing the actual essence of your requirement.
+You won't have to write complicated components and handle issues such as validation and error management because they are already built in.
+
+Now imagine how fast you could develop when you only have to ask for what you want, not implement it.
+
+## Examples
+
+A minimal set of examples to show you how easy your life can be.
+
+### Form example
+
+More details about forms [here](/form).
+
+```javascript
+<DVKForm
+  fields={ [
+    { name: 'email', label: 'Email Address', type: 'email' },
+    { name: 'password', label: 'Password', type: 'password' },
+  ] }
+  onSubmit={ handleLogin }
+/>
+```
+
+### Table example
+
+More details about tables [here](/table).
+
+```
+<DVKTable
+  columns={ [
+    { name: 'id', label: 'Id', type: 'text' },
+    { name: 'firstName', label: 'First Name', type: 'text' },
+    { name: 'lastName', label: 'Last Name', type: 'text' },
+  ] }
+  rows={ [
+    { id: 1, firstName: "John", lastName: "Doe" },
+    { id: 2, firstName: "Jane", lastName: "Doe" },
+    { id: 3, firstName: "John", lastName: "Roe" },
+    { id: 4, firstName: "Richard", lastName: "Roe" },
+  ] }
+/>
+```
+
+### Confirmation modal example
+
+More details about modals [here](/modal).
+```
+modal
+```
+
+### Error modal example
+
+More details about modals [here](/modal).
+```
+modal
+```
+
+## Licence
+
+MIT
+
+## Special thanks
+
+ - [OptiOffer](https://optioffer.com) for sponsoring and using this lib
+ - [Gatsby](https://www.gatsbyjs.org) for powering the docs website
+ - [gatsby-gitbook-starter](https://github.com/hasura/gatsby-gitbook-starter) for the awesome docs starter
