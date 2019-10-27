@@ -27,6 +27,9 @@ const useStyles = makeStyles(theme => ({
   gutterRight: {
     marginRight: theme.spacing(1),
   },
+  leftForm: {
+    marginTop: theme.spacing(1),
+  },
 }));
 
 export default useStyles;

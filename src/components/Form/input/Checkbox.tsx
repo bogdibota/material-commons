@@ -14,6 +14,7 @@ const InputCheckbox: FunctionComponent<DVKCheckboxField & PropsWithErrorManageme
                                                                                          required = false,
                                                                                          disabled = false,
                                                                                          text = '',
+                                                                                         checkboxProps = {},
 
                                                                                          hasError,
                                                                                          message,
@@ -35,6 +36,7 @@ const InputCheckbox: FunctionComponent<DVKCheckboxField & PropsWithErrorManageme
       <FormControlLabel
         control={
           <Checkbox
+            { ...checkboxProps }
             checked={ !!deepGet(obj, name, false) }
             onChange={ updateProperty(name, type) }
             value={ true }
