@@ -24,6 +24,7 @@ Available props for the DVKField Component.
 | renderActions | (formId: string) => ReactElement &#124; null | null | The render function returning the form actions. A form id is provided as a param to identify forms in nested scenarios. |
 | bottomContent | node |  | The content inserted inside the form, **after** the fields. |
 | children | node | | The content inserted inside the form, **before** the fields. | 
+| className | string | | The css class prop passed to the `form` node. | 
 | InputModal | ComponentType | React.Fragment | 🔨 Used to avoid circular dependencies. Planned for refactoring. | 
 
 ## DVKField

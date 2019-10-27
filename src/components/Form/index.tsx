@@ -26,6 +26,8 @@ import InputSelect from './input/Select';
 
 
 export type DVKFormProps = {
+  className?: string,
+
   bottomContent?: ReactNode,
   defaultValue?: DVKObject,
   fields: DVKField[],
@@ -66,6 +68,7 @@ function stripSyntheticIds(obj: DVKObject): DVKObject {
 const defaultProps = { defaultValue: {} };
 
 const DVKForm: FunctionComponent<DVKFormProps> = ({
+                                                    className,
                                                     children,
                                                     bottomContent,
 
@@ -160,7 +163,7 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
                               fields, editLabel, deleteLabel, deleteMessage,
 
                               // checkbox
-                              text,
+                              text, checkboxProps,
                             }: DVKFieldMashed): ReactNode {
     const errorMessageCode = (invalidFields && invalidFields[name]);
     const message = getErrorMessage(errorMessageCode, errorMessage);
@@ -223,6 +226,7 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
           required={ required }
           disabled={ disabled }
           text={ text }
+          checkboxProps={ checkboxProps }
 
           { ...errorProps }
         />;
@@ -265,7 +269,7 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
   }
 
   return (
-    <form onSubmit={ handleSubmit } id={ formId } key={ formId }>
+    <form key={ formId } id={ formId } className={ className } onSubmit={ handleSubmit }>
       <ContentWrapper>
         <FormContext.Provider value={ {
           obj,

@@ -1,3 +1,5 @@
+import { CheckboxProps } from '@material-ui/core/Checkbox';
+
 export type DVKValue = string | number | DVKObject | DVKListItem[]
 
 export type DVKObject = {
@@ -112,6 +114,7 @@ export type DVKCheckboxField = LabeledField<DVKCheckboxType> & FieldWithErrorMan
   text?: string,
   required?: boolean,
   disabled?: boolean,
+  checkboxProps?: CheckboxProps,
 }
 
 export type DVKHiddenType = 'hidden';

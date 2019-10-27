@@ -4,7 +4,7 @@ import React, { FC, useMemo, useState } from 'react';
 import useStyles from '../styles';
 
 const FormSection: FC = () => {
-  const { card, pre } = useStyles();
+  const { card, pre, leftForm } = useStyles();
 
   const [submittedEmpty, submitEmpty] = useState();
   const [submittedDefaulted, submitDefaulted] = useState();
@@ -21,6 +21,7 @@ const FormSection: FC = () => {
   return <Grid container wrap="wrap">
     <Paper className={ card }>
       <DVKForm
+        className={ leftForm }
         fields={ [
           {
             type: 'number',
@@ -55,6 +56,7 @@ const FormSection: FC = () => {
             label: 'Terms and conditions',
             text: 'I accept the terms and conditions',
             type: 'checkbox',
+            checkboxProps: { color: 'primary' },
             required: true,
           },
           { name: 'password', label: 'string password', type: 'password' },
