@@ -2,7 +2,7 @@ const config = {
   'gatsby': {
     'pathPrefix': '/',
     'siteUrl': 'https://material-commons.dvkiin.xyz',
-    'gaTrackingId': null,
+    'gaTrackingId': 'UA-40939202-5',
   },
   'header': {
     'logo': 'https://optioffer.com/wp-content/uploads/2019/10/android-chrome-512x512-1.png',
