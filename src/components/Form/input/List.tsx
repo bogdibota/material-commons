@@ -18,17 +18,21 @@ import FormContext from '../context';
 import { DVKListField, DVKListItem, isHiddenField } from '../domain';
 import useStyles from '../styles';
 
-const InputList: FunctionComponent<DVKListField> = ({
-                                                      name,
-                                                      label,
+type InputListProps = DVKListField & {
+  InputModal: any, // any because we cannot import InputModal directly
+}
 
-                                                      editLabel = ({ id }) => `Edit '${ id }'`,
-                                                      deleteLabel = ({ id }) => `Delete '${ id }'`,
-                                                      deleteMessage = () => '',
-                                                      fields,
+const InputList: FunctionComponent<InputListProps> = ({
+                                                        name,
+                                                        label,
 
-                                                      InputModal,
-                                                    }) => {
+                                                        editLabel = ({ id }) => `Edit '${ id }'`,
+                                                        deleteLabel = ({ id }) => `Delete '${ id }'`,
+                                                        deleteMessage = () => '',
+                                                        fields,
+
+                                                        InputModal,
+                                                      }) => {
   const { obj, updatePropertyF } = useContext(FormContext);
   const classes = useStyles();
   const { isOpen: isAddModalOpen, open: openAddModal, close: closeAddModal } = useModal();
