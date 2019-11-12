@@ -4,7 +4,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import React, { FC } from 'react';
+import React, { FC, ReactElement, useCallback } from 'react';
 
 import DVKForm from '../Form';
 import { DVKField, DVKObject } from '../Form/domain';
@@ -26,6 +26,8 @@ export type InputModalProps = {
   defaultValue?: DVKObject,
   invalidFields?: { [key: string]: boolean | string },
 
+  renderActions?: (formId: string) => ReactElement | null,
+
 };
 
 // these values are used for change detection
@@ -43,16 +45,20 @@ const InputModal: FC<InputModalProps> = ({
                                            children,
                                            invalidFields = {},
                                            saveLabel = 'Create',
+                                           renderActions = null,
                                          }) => {
-  const renderActions = (formId: string) => <>
-    <Button onClick={ onClose }>
-      Cancel
-    </Button>
-    <FlexExpander/>
-    <Button color="primary" type="submit" form={ formId }>
-      { saveLabel }
-    </Button>
-  </>;
+  const actualRenderActions = useCallback((formId: string) => {
+    if (renderActions) return renderActions(formId);
+    return <>
+      <Button onClick={ onClose }>
+        Cancel
+      </Button>
+      <FlexExpander/>
+      <Button color="primary" type="submit" form={ formId }>
+        { saveLabel }
+      </Button>
+    </>;
+  }, [onClose, saveLabel, renderActions]);
 
   return (
     <Dialog
@@ -70,7 +76,7 @@ const InputModal: FC<InputModalProps> = ({
         defaultValue={ defaultValue }
         ContentWrapper={ DialogContent }
         ActionsWrapper={ DialogActions }
-        renderActions={ renderActions }
+        renderActions={ actualRenderActions }
         onSubmit={ onCreate }
         onChange={ onChange }
         invalidFields={ invalidFields }

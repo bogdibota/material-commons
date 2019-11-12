@@ -951,8 +951,9 @@
   dependencies:
     "@date-io/core" "^1.3.9"
 
-"@dvkiin/material-commons@link:C:/tmp/dvkiin-material-common":
+"@dvkiin/material-commons@link:../../tmp/dvkiin-material-common":
   version "0.0.0"
+  uid ""
 
 "@emotion/hash@^0.7.1":
   version "0.7.2"
