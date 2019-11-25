@@ -70,7 +70,7 @@ const InputFile: FC<DVKFileField & PropsWithErrorManagement> = ({
               <AttachFileIcon className={ classes.iconLeft }/>
               Attach
             </Button>
-            { selectedFileName && <IconButton aria-label="Remove selected image" onClick={ clearField }>
+            { selectedFileName && <IconButton aria-label="Remove selected files" onClick={ clearField }>
               <DeleteIcon/>
             </IconButton> }
           </InputAdornment> }

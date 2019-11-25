@@ -158,7 +158,10 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
                               errorMessage,
 
                               // default
-                              required, autoFocus, disabled, multiline, autoComplete, acceptedFileType, multiple,
+                              required, autoFocus, disabled, multiline, autoComplete,
+
+                              //file
+                              acceptedFileType, multiple,
 
                               // select
                               values,
