@@ -38,6 +38,7 @@ export type DVKFieldMashed = DVKField
   & DVKSelectField
   & DVKDefaultField
   & DVKImageField
+  & DVKFileField
   & DVKCheckboxField
   & DVKHiddenField
 
@@ -46,6 +47,7 @@ export type DVKFieldType = DVKDateTimeType
   | DVKSelectType
   | DVKDefaultType
   | DVKImageType
+  | DVKFileType
   | DVKCheckboxType
   | DVKHiddenType
 
@@ -55,6 +57,7 @@ export type DVKField = (
   | DVKSelectField
   | DVKDefaultField
   | DVKImageField
+  | DVKFileField
   | DVKCheckboxField
   | DVKHiddenField
   ) & {
@@ -109,6 +112,13 @@ export type DVKImageField = LabeledField<DVKImageType> & FieldWithErrorManagemen
   disabled?: boolean,
 }
 
+export type DVKFileType = 'file';
+export type DVKFileField = LabeledField<DVKFileType> & FieldWithErrorManagement & {
+  required?: boolean,
+  disabled?: boolean,
+  acceptedFileType?: string,
+  multiple?: boolean,
+}
 export type DVKCheckboxType = 'checkbox';
 export type DVKCheckboxField = LabeledField<DVKCheckboxType> & FieldWithErrorManagement & {
   text?: string,

@@ -19,6 +19,7 @@ import { DVKField, DVKFieldMashed, DVKInvalidFields, DVKObject, DVKValue, FieldW
 import InputCheckbox from './input/Checkbox';
 import InputDateTime from './input/DateTime';
 import InputDefault from './input/Default';
+import InputFile from './input/File';
 import InputHidden from './input/Hidden';
 import InputImage from './input/Image';
 import InputList from './input/List';
@@ -114,6 +115,9 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
       case 'image':
         value = event;
         break;
+      case 'file':
+        value = event;
+        break;
       case 'checkbox':
         value = event.target.checked;
         break;
@@ -155,6 +159,9 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
 
                               // default
                               required, autoFocus, disabled, multiline, autoComplete,
+
+                              //file
+                              acceptedFileType, multiple,
 
                               // select
                               values,
@@ -217,6 +224,16 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
           disabled={ disabled }
           autoFocus={ autoFocus }
 
+          { ...errorProps }
+        />;
+      case 'file':
+        return <InputFile
+          { ...commonProps }
+
+          required={ required }
+          disabled={ disabled }
+          acceptedFileType = { acceptedFileType }
+          multiple = { multiple }
           { ...errorProps }
         />;
       case 'checkbox':

@@ -145,6 +145,14 @@ const FormSection: FC = () => {
             required: true,
           },
           {
+            name: 'file',
+            label: 'File',
+            type: 'file',
+            required: true,
+            acceptedFileType: 'application/pdf',
+            multiple: true,
+          },
+          {
             name: 'terms and conditions',
             label: 'Terms and conditions',
             type: 'checkbox',
