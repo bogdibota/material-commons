@@ -51,22 +51,23 @@ function convertValue(value: DVKValue, type: string): any {
 }
 
 function strip(value: any) {
-  const newObj = {...value}
-  delete newObj.__typename
-  delete newObj.synteticId
-  return newObj
+  const newObj = { ...value };
+  delete newObj.__typename;
+  delete newObj.synteticId;
+  return newObj;
 }
 
 function needsStripping(value: any): boolean {
   return value.synteticId || value.__typename;
 }
+
 // TODO deep check
 function stripSyntheticIds(obj: DVKObject): DVKObject {
   return Object.keys(obj).reduce((acc, key) => ({
     ...acc,
     [key]: Array.isArray(obj[key])
-        ? (obj[key] as DVKValue[]).map(value => needsStripping(value) ? strip(value) : value)
-        : obj[key],
+      ? (obj[key] as DVKValue[]).map(value => needsStripping(value) ? strip(value) : value)
+      : obj[key],
   }), {});
 }
 
@@ -237,8 +238,8 @@ const DVKForm: FunctionComponent<DVKFormProps> = ({
 
           required={ required }
           disabled={ disabled }
-          acceptedFileType = { acceptedFileType }
-          multiple = { multiple }
+          acceptedFileType={ acceptedFileType }
+          multiple={ multiple }
           { ...errorProps }
         />;
       case 'checkbox':
