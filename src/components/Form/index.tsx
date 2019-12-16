@@ -50,19 +50,24 @@ function convertValue(value: DVKValue, type: string): any {
   }
 }
 
+function strip(value: any) {
+  const newObj = {...value}
+  delete newObj.__typename
+  delete newObj.synteticId
+  return newObj
+}
+
+function needsStripping(value: any): boolean {
+  return value.synteticId || value.__typename;
+}
 // TODO deep check
 function stripSyntheticIds(obj: DVKObject): DVKObject {
-  return Object.keys(obj)
-    .reduce((acc, key) => ({
-      ...acc,
-      [key]: Array.isArray(obj[key])
-        ? (obj[key] as DVKValue[]).map((value: any) => Object.keys(value).reduce((sAcc, sKey) => {
-          // we also strip typename, so the obj could be received and sent directly to apollo
-          if (['syntheticId', '__typename'].indexOf(sKey) > -1) return sAcc;
-          return { ...sAcc, [sKey]: value[sKey] };
-        }, {}))
+  return Object.keys(obj).reduce((acc, key) => ({
+    ...acc,
+    [key]: Array.isArray(obj[key])
+        ? (obj[key] as DVKValue[]).map(value => needsStripping(value) ? strip(value) : value)
         : obj[key],
-    }), {});
+  }), {});
 }
 
 // these values are used for change detection
