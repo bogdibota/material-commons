@@ -80,8 +80,6 @@ export type DVKListField = LabeledField<DVKListType> & {
   editLabel?: (value: DVKListItem) => string,
   deleteLabel?: (value: DVKListItem) => string,
   deleteMessage?: (value: DVKListItem) => string,
-
-  InputModal: any
 }
 
 export type DVKSelectFieldValue = string | {

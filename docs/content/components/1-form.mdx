@@ -1,0 +1,254 @@
+---
+title: "DVKForm"
+metaTitle: "DVKForm component"
+metaDescription: "Documentation and examples for the DVKForm component"
+---
+
+import { LabeledField, PropsTable, WithRequired, WithDisabled, WithAutoFocus, WithErrorManagement, noWrap } from '../../contentSnippets'
+
+## Description
+
+DVKForm is a component that generates and manages a form based on a declarative collection of fields.
+
+## Props
+
+Available props for the DVKField Component.
+
+| Name | Type | Default | Description |
+|---|---|:---:|---|
+| fields * | DVKField[] | | The array of fields to be generated. See below. | 
+| defaultValue | DVKObject | {} | The object from which to initially populate the form. Changing this object later on, will not update the form. Please use the `key` prop to signal a form reset. | 
+| onSubmit | (obj: DVKObject) => void | () => null | Called on form submit. This can be triggered by `Return` key or a `<button type="submit"/>` provided by `renderActions`.  |
+| onChange | (obj: DVKObject) => void | () => null | Called when a change occurs on any field. |
+| invalidFields | DVKInvalidFields &#124; null | null | The object used to display errors on the form fields. See [Validation](/validation) for more details. |
+| ContentWrapper | ComponentType | React.Fragment | The component type with which the form content will be wrapped. Useful when integrating the DVKForm in cards or modals. |
+| ActionsWrapper | ComponentType | React.Fragment | The component type with which the form actions will be wrapped. Useful when integrating the DVKForm in cards or modals. This effect can also be achieved using just `renderActions`. |
+| renderActions | (formId: string) => ReactElement &#124; null | null | The render function returning the form actions. A form id is provided as a param to identify forms in nested scenarios. |
+| bottomContent | node |  | The content inserted inside the form, **after** the fields. |
+| children | node | | The content inserted inside the form, **before** the fields. | 
+| className | string | | The css class prop passed to the `form` node. | 
+| InputModal | ComponentType | React.Fragment | 🔨 Used to avoid circular dependencies. Planned for refactoring. | 
+
+## DVKField
+
+DVKField is the field object from which DVKForm builds each form field. 
+
+## DVKDateTimeField
+
+This field type is used for `date`, `time` and `datetime` inputs. 
+It uses the pickers from [`@material-ui/pickers`](https://material-ui-pickers.dev/) (this is listed as a peerDependency), more explicitly 
+[`DatePicker`](https://material-ui-pickers.dev/api/DatePicker) for date,
+[`TimePicker`](https://material-ui-pickers.dev/api/TimePicker) for time,
+[`DatePicker`](https://material-ui-pickers.dev/api/DateTimePicker) for datetime,
+
+#### Example
+
+```javascript
+<DVKForm
+  fields={ [
+    { name: 'birthday', label: 'Birthday', type: 'date' },
+    { name: 'validUntil', label: 'Valid until', type: 'date-time' },
+    { name: 'lunchTime', label: 'We\'ll have lunch at', type: 'time' },
+  ] }
+  onSubmit={ handleSubmit }
+/>
+```
+
+#### Props
+
+Available props for the DVKDateTimeField object.
+
+| Name | Type | Default | Description |
+|---|---|:---:|---|
+| type * | 'date' <br />&#124; 'time' <br />&#124; 'date-time' | | The type of field to render. See above. |
+| name * | string | | The unique field key. This is used as a `key` in the field list and as the name of the property on the resulted object. Must be unique. Can be nested (`person.birthday`). |
+| label * | string | | The label rendered on the input. |
+| required | boolean | false | If true, the field is marked as required and the form cannot be submitted without a values for this field. `onChange` does not take this into account. |
+| disabled | boolean | false | If true, the field is marked as disabled as is readonly. It's value (if provided via `defaultValue`) is sent on both `onChange` and `onSubmit`. |
+| errorMessage | string <br />&#124; DVKErrorMessages | null | The error text to be displayed (if string), or a map of error codes (from `invalidFields`) to the error text (if DVKErrorMessages). |
+
+## DVKListField
+
+This field is useful for rendering lists of sub-objects. Let's call the sub-objects **items** from now on.
+A `DVKTable` (with edit and delete functionality) will be generated to display the items alongside an add button.
+An `InputModal` is intended to be used to add items to that list.
+The final result will be a property in the created DVKObject that contains a list of said items.
+
+**IMPORTANT:** when using this field, make sure to pass the `InputModal` as a prop to the form.
+This is used to avoid circular dependency and is planned for refactoring.
+
+
+#### Example
+
+```javascript
+import { DVKForm, InputModal } from '@dvkiin/material-commons';
+
+<DVKForm
+  fields={ [
+    {
+      name: 'roles', label: 'Roles', type: 'list',
+      fields: [
+        { name: 'name', label: 'Name', type: 'text' },
+        { name: 'isDisabled', label: 'Disabled', type: 'checkbox' },
+      ],
+    },
+  ] }
+  onSubmit={ handleSubmit }
+  InputModal={ InputModal } // !! this is very important
+/>
+```
+
+#### Props
+
+Available props for the DVKListField object.
+
+<PropsTable>
+  <LabeledField types={['list']} />
+  <tr>
+    <td>fields *</td>
+    <td>DVKField[]</td>
+    <td />
+    <td>The fields for each of the items. See above.</td>
+  </tr>
+  <tr>
+    <td>editLabel</td>
+    <td>(value: DVKListItem) => string</td>
+    <td>{ '({ id }) =>' } <inlineCode style={noWrap}>{ '`Edit \'${ id }\'`' }</inlineCode> </td>
+    <td>Used to set the edit label in the table actions.</td>
+  </tr>
+  <tr>
+    <td>deleteLabel</td>
+    <td>(value: DVKListItem) => string</td>
+    <td>{ '({ id }) =>' } <inlineCode style={noWrap}>{ '`Delete \'${ id }\'`' }</inlineCode> </td>
+    <td>Used to set the delete label in the table actions.</td>
+  </tr>
+  <tr>
+    <td>deleteMessage</td>
+    <td>(value: DVKListItem) => string</td>
+    <td>() => ' '</td>
+    <td>The delete confirmation message.</td>
+  </tr>
+</PropsTable>
+
+## DVKSelectField
+
+This field is useful when you need to choose between predefined values. It uses a [`Select`](https://material-ui.com/components/selects/) for rendering.
+The values from which to choose are specified via the `values` prop.
+
+#### Example
+
+```javascript
+import { DVKForm } from '@dvkiin/material-commons';
+
+<DVKForm
+  fields={ [
+    {
+      name: 'country', label: 'Country', type: 'select',
+      values: [ 'Afghanistan', 'Albania', 'Algeria', 'Andorra', '...' ],
+    },
+  ] }
+  onSubmit={ handleSubmit }
+/>
+```
+
+#### Props
+
+Available props for the DVKSelectField object.
+
+<PropsTable>
+  <LabeledField types={['select']} />
+  <tr>
+    <td>values *</td>
+    <td>DVKSelectFieldValue[]</td>
+    <td />
+    <td>The values that can be chosen.</td>
+  </tr>
+  <WithRequired />
+  <WithDisabled />
+  <WithAutoFocus />
+  <WithErrorManagement />
+</PropsTable>
+
+## DVKDefaultField
+
+This field has multiple uses, but they were group becaue they require the same properties and they are all rendered using [`TextField`](https://material-ui.com/components/text-fields/).
+Available types are: `text`, `email`, `password` and `number`.
+
+#### Example
+
+```javascript
+import { DVKForm } from '@dvkiin/material-commons';
+
+<DVKForm
+  fields={ [
+    { name: 'salutation', label: 'Salutation', type: 'text' },
+    { name: 'email', label: 'Email', type: 'email' },
+    { name: 'password', label: 'Password', type: 'password' },
+    { name: 'age', label: 'Age', type: 'number' },
+  ] }
+  onSubmit={ handleSubmit }
+/>
+```
+
+#### Props
+
+Available props for the DVKDefaultField object.
+
+<PropsTable>
+  <LabeledField types={['text', 'email', 'password', 'number']} />
+  <WithRequired />
+  <WithDisabled />
+  <WithAutoFocus />
+  <tr>
+    <td>autoComplete</td>
+    <td>string</td>
+    <td>name</td>
+    <td>Used to tell browsers what should be auto-completed in that field.</td>
+  </tr>
+  <tr>
+    <td>multiline</td>
+    <td>boolean</td>
+    <td>false</td>
+    <td>If true, the field will have multiple lines (like a `textarea`). Only considered if the type is `text`.</td>
+  </tr>
+  <WithErrorManagement />
+</PropsTable>
+
+## DVKImageField
+
+This field is used to select an image from the user's system. It comes with an avatar feature builtin.
+This field is only to be used for selecting an image. For multiple images or general files, please check `DVKUploadField`.
+Currently this field only supports `image/*`. `svg` support is planned. PR's are welcome, as per usual.
+
+#### Example
+
+```javascript
+import { DVKForm } from '@dvkiin/material-commons';
+
+<DVKForm
+  fields={ [
+    { name: 'avatar', label: 'Avatar', type: 'image' },
+  ] }
+  onSubmit={ handleSubmit }
+/>
+```
+
+#### Props
+
+Available props for the DVKImageField object.
+
+<PropsTable>
+  <LabeledField types={['image']} />
+  <WithRequired />
+  <WithDisabled />
+  <WithAutoFocus />
+  <WithErrorManagement />
+</PropsTable>
+
+## DVKCheckboxField
+
+## DVKHiddenField
+
+## DVKUploadField
+
+WIP
