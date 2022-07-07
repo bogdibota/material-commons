@@ -5,12 +5,12 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@dvkiin/material-commons": "link:C:\\tmp\\dvkiin-material-common",
+    "@dvkiin/material-commons": "link:C:\tmp\dvkiin-material-common",
     "@date-io/moment": "^1.3.9",
     "@material-ui/core": "^4.2.1",
     "@material-ui/icons": "^4.2.1",
     "@material-ui/pickers": "^3.2.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
